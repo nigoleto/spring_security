@@ -10,8 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check code
+      - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: run a one-line script
-        uses: echo "hello world bro!"
+      - name: Run a script
+        run: echo "Hello, GitHub Actions!"
