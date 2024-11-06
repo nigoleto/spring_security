@@ -1,1 +1,5 @@
-spring.application.name=springSecurityMaster
+spring:
+  security:
+    user:
+      name: admin
+      password: qweqwe123
