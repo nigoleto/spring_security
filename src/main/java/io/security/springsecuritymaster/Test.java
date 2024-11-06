@@ -19,5 +19,4 @@ public class Test {
         int age = scanner.nextInt();
         scanner.close();
     }
-
 }
