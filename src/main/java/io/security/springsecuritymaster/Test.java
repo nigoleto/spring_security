@@ -7,7 +7,7 @@ import java.util.Scanner;
 @Service
 public class Test {
 
-    public void test() {
+    public static void test() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter your name: ");
         String name = scanner.nextLine();
@@ -18,5 +18,5 @@ public class Test {
         System.out.println("Please enter your age: ");
         int age = scanner.nextInt();
         scanner.close();
-    }
+
 }
