@@ -1,0 +1,17 @@
+name: workflow test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check code
+        uses: actions/checkout@v2
+
+      - name: run a one-line script
+        uses: echo "hello world bro!"
