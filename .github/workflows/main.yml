@@ -14,12 +14,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # JDK 설정 및 Gradle 빌드
+      # JDK 설정
       - name: Set up JDK 17
         uses: actions/setup-java@v2
         with:
           java-version: '17'
           distribution: 'temurin'
+
+      # 권한 설정 및 Gradle 빌드
+      - name: Give execute permission to gradlew
+        run: chmod +x gradlew
 
       - name: Build with Gradle
         run: ./gradlew build
