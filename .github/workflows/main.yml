@@ -11,7 +11,7 @@ jobs:
 
     steps:  # 작업에서 실행할 단계들
       - name: Checkout code  # 코드 체크아웃 단계
-        uses: actions/checkout@v2  # GitHub에서 제공하는 액션을 사용하여 코드 가져오기
+        uses: actions/checkout@v4  # GitHub에서 제공하는 액션을 사용하여 코드 가져오기
 
       - name: Run a one-line script  # 간단한 명령어 실행 예시
         run: echo "Hello, GitHub Actions!"  # 스크립트 실행
