@@ -14,19 +14,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # JDK 설정
-      - name: Set up JDK 17
-        uses: actions/setup-java@v2
-        with:
-          java-version: '17'
-          distribution: 'temurin'
+#      # JDK 설정
+#      - name: Set up JDK 17
+#        uses: actions/setup-java@v2
+#        with:
+#          java-version: '17'
+#          distribution: 'temurin'
+#
+#      # 권한 설정 및 Gradle 빌드
+#      - name: Give execute permission to gradlew
+#        run: chmod +x gradlew
+#
+#      - name: Build with Gradle
+#        run: ./gradlew build
 
-      # 권한 설정 및 Gradle 빌드
-      - name: Give execute permission to gradlew
-        run: chmod +x gradlew
+      - name: Create application.yml from GitHub Secrets
+        run: |
+          mkdir -p src/main/resources/
+          echo "${{ secrets.APPLICATION_YML }}" | tee src/main/resources/application.yml
 
-      - name: Build with Gradle
-        run: ./gradlew build
 
       # Docker 로그인 (Docker Hub 사용자명과 비밀번호가 GitHub Secrets에 저장돼 있어야 함)
       - name: Log in to Docker Hub
@@ -37,8 +43,25 @@ jobs:
 
       # Docker 이미지 빌드
       - name: Build Docker image
-        run: docker build -t nigoleto/myapp:latest .
+        run: docker build -t ${{ secrets.SERVER_IMAGE_TAG }} .
 
       # Docker Hub에 이미지 푸시
       - name: Push Docker image
-        run: docker push nigoleto/myapp:latest
+        run: docker push ${{ secrets.SERVER_IMAGE_TAG }}
+
+
+  deploy:
+    needs: [ build ]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: SSH to deploy server
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.REMOTE_SERVER_IP }}
+          username: ${{ secrets.REMOTE_SERVER_USER }}
+          key: ${{ secrets.REMOTE_SSH_KEY }}
+          script: |
+            docker pull ${{ secrets.SERVER_IMAGE_TAG }}
+            docker compose down
+            docker compose up --build -d
