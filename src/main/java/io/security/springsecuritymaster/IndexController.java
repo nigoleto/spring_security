@@ -9,6 +9,6 @@ public class IndexController {
 
     @GetMapping("/")
     public String index() {
-        return "Welcome to Spring Security Master";
+        return "Welcome to Spring Security Master!!";
     }
 }
