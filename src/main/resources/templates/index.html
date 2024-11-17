@@ -3,6 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Welcome</title>
+    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=YOUR_APP_KEY"></script>
+    <style>
+        #map {
+            width: 100%;
+            height: 500px;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -10,6 +17,8 @@
     </header>
 
     <main>
+        <div id="map"></div>
+
         <p th:text="'Hello, ' + ${name} + '!'">Hello, Thymeleaf!</p>
 
         <h2>Item List</h2>
@@ -22,5 +31,56 @@
         <p>&copy; 2024 Thymeleaf Example</p>
     </footer>
 
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=722ae423eb204750077af6f3467baba3"></script>
+
+    <script>
+        // 지도 생성 함수
+        function initMap(lat, lng) {
+            const mapContainer = document.getElementById('map'); // 지도를 표시할 div
+            const mapOption = {
+                center: new kakao.maps.LatLng(lat, lng), // 사용자의 현재 위치
+                level: 3 // 지도 확대 레벨
+            };
+
+            const map = new kakao.maps.Map(mapContainer, mapOption); // 지도 생성
+
+            // 사용자 위치에 마커 표시
+            const marker = new kakao.maps.Marker({
+                position: new kakao.maps.LatLng(lat, lng) // 마커 위치
+            });
+            marker.setMap(map);
+
+            // 사용자 위치에 인포윈도우 추가
+            const infowindow = new kakao.maps.InfoWindow({
+                content: '<div style="padding:5px;">내 위치</div>'
+            });
+            infowindow.open(map, marker);
+        }
+
+        // 사용자 위치 요청 및 지도 초기화
+        function getUserLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    position => {
+                        const lat = position.coords.latitude; // 위도
+                        const lng = position.coords.longitude; // 경도
+                        initMap(lat, lng); // 사용자 위치로 지도 초기화
+                    },
+                    error => {
+                        alert('위치 정보를 가져올 수 없습니다. 기본 위치로 설정합니다.');
+                        // 기본 위치로 지도 초기화
+                        initMap(37.5665, 126.9780); // 서울 중심 좌표
+                    }
+                );
+            } else {
+                alert('사용자의 위치 정보를 지원하지 않는 브라우저입니다. 기본 위치로 설정합니다.');
+                // 기본 위치로 지도 초기화
+                initMap(37.5665, 126.9780); // 서울 중심 좌표
+            }
+        }
+
+        // 지도 초기화
+        getUserLocation();
+    </script>
 </body>
 </html>

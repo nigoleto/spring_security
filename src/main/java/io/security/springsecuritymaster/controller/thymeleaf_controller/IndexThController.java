@@ -1,4 +1,4 @@
-package io.security.springsecuritymaster.controller.thymeleafcontroller;
+package io.security.springsecuritymaster.controller.thymeleaf_controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
