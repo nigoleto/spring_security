@@ -79,4 +79,4 @@ jobs:
           script: |
             docker pull ${{ secrets.SERVER_IMAGE_TAG }}
             docker compose down
-            docker compose up --build -d
+            docker compose up -d
