@@ -49,12 +49,12 @@ jobs:
 #      - name: Wait for MySQL to be ready
 #        run: sleep 30
 #
-      # 권한 설정 및 Gradle 빌드
-      - name: Give execute permission to gradlew
-        run: chmod +x gradlew
-
-      - name: Build with Gradle
-        run: ./gradlew build
+#      # 권한 설정 및 Gradle 빌드
+#      - name: Give execute permission to gradlew
+#        run: chmod +x gradlew
+#
+#      - name: Build with Gradle
+#        run: ./gradlew build
 
       # Docker 이미지 빌드
       - name: Build Docker image
