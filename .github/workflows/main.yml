@@ -14,12 +14,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-#      # JDK 설정
-#      - name: Set up JDK 17
-#        uses: actions/setup-java@v3
-#        with:
-#          java-version: '17'
-#          distribution: 'temurin'
+      # JDK 설정
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
 
       # application yml 파일 생성
       - name: Create application.yml from GitHub Secrets
@@ -46,16 +46,15 @@ jobs:
 #      - name: Start MySQL container
 #        run: docker-compose up -d db
 #
-#
 #      - name: Wait for MySQL to be ready
 #        run: sleep 30
 #
-#      # 권한 설정 및 Gradle 빌드
-#      - name: Give execute permission to gradlew
-#        run: chmod +x gradlew
-#
-#      - name: Build with Gradle
-#        run: ./gradlew build
+      # 권한 설정 및 Gradle 빌드
+      - name: Give execute permission to gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew build
 
       # Docker 이미지 빌드
       - name: Build Docker image

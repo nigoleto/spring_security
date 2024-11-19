@@ -9,8 +9,6 @@
 FROM gradle:8.10-jdk17 AS build
 WORKDIR /app
 COPY . .
-# 디버깅을 위한 ls 명령어 실행 (확인용)
-RUN ls -al /app
 RUN gradle build --no-daemon -x test
 
 # Run stage
