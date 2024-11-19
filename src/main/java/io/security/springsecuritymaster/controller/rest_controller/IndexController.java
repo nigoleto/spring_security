@@ -1,6 +1,6 @@
 package io.security.springsecuritymaster.controller.rest_controller;
 
-import io.security.springsecuritymaster.service.KakaoMapApiService;
+import io.security.springsecuritymaster.service.PubDataApiService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -9,14 +9,15 @@ import java.io.IOException;
 @RestController
 public class IndexController {
 
-    private final KakaoMapApiService kakaoMapApiService;
+    private final PubDataApiService pubDataApiService;
 
-    public IndexController(KakaoMapApiService kakaoMapApiService) {
-        this.kakaoMapApiService = kakaoMapApiService;
+    public IndexController(PubDataApiService pubDataApiService) {
+        this.pubDataApiService = pubDataApiService;
     }
 
     @GetMapping("/api")
     public String index() throws IOException {
-        return kakaoMapApiService.getDataApi();
+        pubDataApiService.saveGwangju();
+        return pubDataApiService.getDataApi();
     }
 }
