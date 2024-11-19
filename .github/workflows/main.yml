@@ -46,6 +46,10 @@ jobs:
       - name: Start MySQL container
         run: docker-compose up -d db
 
+
+      - name: Wait for MySQL to be ready
+        run: sleep 30
+
       # 권한 설정 및 Gradle 빌드
       - name: Give execute permission to gradlew
         run: chmod +x gradlew
