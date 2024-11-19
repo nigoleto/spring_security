@@ -6,7 +6,7 @@
 #
 #ENTRYPOINT ["java", "-jar", "myapp.jar"]
 # Build stage
-FROM gradle:8.8-jdk17 AS build
+FROM gradle:8.10-jdk17 AS build
 WORKDIR /app
 COPY . .
 # 디버깅을 위한 ls 명령어 실행 (확인용)
