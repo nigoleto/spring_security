@@ -7,10 +7,8 @@ import io.security.springsecuritymaster.domain.pub_data.Gwangju;
 import io.security.springsecuritymaster.domain.pub_data.GwangjuDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriUtils;
 
 import java.net.URI;
