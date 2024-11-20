@@ -15,4 +15,6 @@ public interface GwangjuRepository extends JpaRepository<Gwangju, Long> {
     @Query("SELECT g.address FROM Gwangju g")
     List<String> findAllAddresses();
 
+    @Query("SELECT g FROM Gwangju g WHERE g.latitude BETWEEN :latMin AND :latMax AND g.longitude BETWEEN :lngMin AND :lngMax")
+    List<Gwangju> findBinsInRange(double latMin, double latMax, double lngMin, double lngMax);
 }
