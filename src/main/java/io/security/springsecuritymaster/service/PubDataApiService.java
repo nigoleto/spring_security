@@ -32,8 +32,8 @@ public class PubDataApiService {
     public void fetchAndSaveData() throws JsonProcessingException {
         // 1. API 호출 URL 생성
         String url = "http://api.odcloud.kr/api/15056449/v1/uddi:6615f5a8-f41f-4c7e-862d-8550c92c2cb5"
-                + "?page=" + "1"
-                + "&perPage=" + "15"
+                + "?page=" + "2"
+                + "&perPage=" + "25"
                 + "&serviceKey=" + UriUtils.encode(serviceKey, StandardCharsets.UTF_8);
 
         URI uri = URI.create(url); // RestClient나 RestTemplate에서는 인코딩 할 때 + 나 / 같은 특수기호를 인코딩 해주지 않기 때문에 명시적으로 uri 형성
