@@ -1,24 +1,54 @@
 package io.security.springsecuritymaster.service;
 
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.security.springsecuritymaster.domain.pub_data.Gwangju;
+import io.security.springsecuritymaster.domain.pub_data.GwangjuDto;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClient;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriUtils;
+
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
 
 @Service
+@RequiredArgsConstructor
 public class GeocodingService {
 
-    private final String kakaoApiKey = "KAKAO_API_KEY";
+    @Value("${kakaomap.api.key}")
+    private String kakaomapKey;
 
-    public String getCoordinates(String address) {
-        String url = "https://dapi.kakao.com/v2/local/search/address.json?query=" + address;
+    private final RestClient restClient;
 
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+    public Gwangju getCoordinates(GwangjuDto gwangjuDto) {
+        String url = "https://dapi.kakao.com/v2/local/search/address.json?query=" + UriUtils.encode("광주 " + gwangjuDto.getAddress(), StandardCharsets.UTF_8);
 
-        if (response.getStatusCode().is2xxSuccessful()) {
-            return response.getBody();
-        } else {
-            throw new RuntimeException("Geocoding 실패: " + response.getStatusCode());
+        URI uri = URI.create(url);
+
+        String response = restClient.get()
+                .uri(uri)
+                .header("Authorization", "KakaoAK " + kakaomapKey)
+                .retrieve()
+                .body(String.class);
+
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode responseJson = null;
+        try {
+            responseJson = mapper.readTree(response);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
         }
+
+        JsonNode firstAddress = responseJson.get("documents").get(0);
+
+        return Gwangju.builder()
+                .latitude(firstAddress.get("y").asDouble())
+                .longitude(firstAddress.get("x").asDouble())
+                .build();
     }
 }
