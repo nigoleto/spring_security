@@ -32,7 +32,7 @@ public class PubDataApiService {
     public void fetchAndSaveData() throws JsonProcessingException {
         // 1. API 호출 URL 생성
         String url = "http://api.odcloud.kr/api/15056449/v1/uddi:6615f5a8-f41f-4c7e-862d-8550c92c2cb5"
-                + "?page=" + "2"
+                + "?page=" + "1"
                 + "&perPage=" + "25"
                 + "&serviceKey=" + UriUtils.encode(serviceKey, StandardCharsets.UTF_8);
 
