@@ -17,7 +17,7 @@ public class IndexController {
 
     @GetMapping("/api")
     public String index() throws IOException {
-        pubDataApiService.saveGwangju();
+        pubDataApiService.fetchAndSaveData();
         return pubDataApiService.getDataApi();
     }
 }

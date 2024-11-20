@@ -55,7 +55,6 @@ public class PubDataService {
 
         ResponseEntity<String> response = restClient.get()
                 .uri(finalUrl)
-                .header("User-Agent", "Mozilla/5.0")
                 .retrieve()
                 .toEntity(String.class);
 
