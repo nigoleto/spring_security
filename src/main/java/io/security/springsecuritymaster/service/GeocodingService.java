@@ -44,9 +44,13 @@ public class GeocodingService {
 
         JsonNode firstAddress = responseJson.get("documents").get(0);
 
-        return Gwangju.builder()
-                .latitude(firstAddress.get("y").asDouble())
-                .longitude(firstAddress.get("x").asDouble())
-                .build();
+        if(firstAddress != null) {
+            return Gwangju.builder()
+                    .latitude(firstAddress.get("y").asDouble())
+                    .longitude(firstAddress.get("x").asDouble())
+                    .build();
+        } else {
+            return Gwangju.builder().build();
+        }
     }
 }
