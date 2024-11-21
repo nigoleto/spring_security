@@ -15,10 +15,10 @@ public class GwangjuService {
 
     public List<Gwangju> getGwangjuInRange(double lat, double lng) {
 
-        double latMin = lat - 0.01;
-        double latMax = lat + 0.01;
-        double lngMin = lng - 0.01;
-        double lngMax = lng + 0.01;
+        double latMin = lat - 0.03;
+        double latMax = lat + 0.03;
+        double lngMin = lng - 0.03;
+        double lngMax = lng + 0.03;
 
         return gwangjuRepository.findBinsInRange(latMin, latMax, lngMin, lngMax);
     }
