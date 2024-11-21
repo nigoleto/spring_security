@@ -57,7 +57,7 @@
             // infowindow.open(map, marker);
 
             // 주변에 있는 의류수거함 위치 마커 추가
-            fetch('/api/gwangju')
+            fetch(`/api/gwangju?lat=${lat}&lng=${lng}`)
                 .then(response => response.json())
                 .then(data => {
                     data.forEach(bin => {
