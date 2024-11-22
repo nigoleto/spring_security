@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/gwangju")
 @RequiredArgsConstructor
-public class IndexController {
+public class ApiController {
 
     private final PubDataApiService pubDataApiService;
     private final GwangjuService gwangjuService;

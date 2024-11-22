@@ -1,4 +1,4 @@
-package io.security.springsecuritymaster.config;
+package io.security.springsecuritymaster.common.config;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
