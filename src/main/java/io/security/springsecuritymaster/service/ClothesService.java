@@ -39,6 +39,7 @@ public class ClothesService {
     }
 
     /** 상세 의류 조회 */
+    @Transactional
     public ClothesResponseDto getClothes(Long id) {
         Clothes clothes = clothesRepository.findById(id)
                 .orElseThrow(() -> new BusinessException(ErrorCode.CLOTHES_NOT_FOUND)
@@ -48,12 +49,12 @@ public class ClothesService {
             throw new BusinessException(ErrorCode.ALREADY_DELETED);
         }
         clothes.increaseViewCount();
-        clothesRepository.save(clothes);
 
         return ClothesResponseDto.toDto(clothes);
     }
 
     /** 의류 정보 수정 */
+    @Transactional
     public ClothesResponseDto updateClothes(Long id, ClothesRequestDto clothesRequestDto) {
         Clothes clothes = clothesRepository.findById(id)
                 .orElseThrow(() -> new BusinessException(ErrorCode.CLOTHES_NOT_FOUND)
@@ -64,19 +65,17 @@ public class ClothesService {
                 clothesRequestDto.description()
         );
 
-        clothesRepository.save(clothes);
         return ClothesResponseDto.toDto(clothes);
     }
 
     /** 의류 삭제 */
+    @Transactional
     public void deleteClothes(Long id) {
         Clothes clothes = clothesRepository.findById(id)
                 .orElseThrow(() -> new BusinessException(ErrorCode.CLOTHES_NOT_FOUND)
                 );
 
         clothes.delete();
-
-        clothesRepository.save(clothes);
     }
 
     /** DTO -> Entity **/
