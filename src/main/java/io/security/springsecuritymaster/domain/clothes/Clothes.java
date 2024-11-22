@@ -34,4 +34,13 @@ public class Clothes extends BaseEntity {
     public void increaseViewCount() {
         this.viewCount++;
     }
+
+    public void update(String title, String description) {
+        this.title = title;
+        this.description = description;
+    }
+
+    public void delete() {
+        super.delete();
+    }
 }
