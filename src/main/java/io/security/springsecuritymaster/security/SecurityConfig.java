@@ -24,7 +24,7 @@ public class SecurityConfig {
             throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable).cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(api -> api
-                        .requestMatchers("/css/**", "/js/**", "/images/**", "/static/**", "/api/**").permitAll()
+                        .requestMatchers("/css/**", "/js/**", "/img/**", "/static/**", "/api/**").permitAll()
                         .requestMatchers("/signup", "/login", "/", "/forgot-password").permitAll()
                         .requestMatchers("/api/gwangju/a").hasAnyRole("ADMIN")
                         .requestMatchers("/my")
