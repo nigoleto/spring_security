@@ -3,6 +3,7 @@ package io.security.springsecuritymaster.controller.rest_controller;
 import io.security.springsecuritymaster.domain.clothes.ClothesRequestDto;
 import io.security.springsecuritymaster.domain.clothes.ClothesResponseDto;
 import io.security.springsecuritymaster.service.ClothesService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatusCode;
@@ -17,14 +18,14 @@ public class ClothesController {
     private final ClothesService clothesService;
 
     @PostMapping
-    public ResponseEntity<Void> addClothes(@RequestBody ClothesRequestDto clothesRequestDto) {
+    public ResponseEntity<Void> addClothes(@Valid @RequestBody ClothesRequestDto clothesRequestDto) {
         clothesService.addClothes(clothesRequestDto);
         return new ResponseEntity<>(HttpStatusCode.valueOf(201));
     }
 
     @GetMapping
     public ResponseEntity<Page<ClothesResponseDto>> getAllClothes(
-            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "9") int size,
             @RequestParam(required = false) String keyword
     ) {
@@ -34,7 +35,7 @@ public class ClothesController {
         return new ResponseEntity<>(clothesList, HttpStatusCode.valueOf(200));
     }
 
-    @GetMapping("/detail/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ClothesResponseDto> getClothes(@PathVariable Long id) {
         return new ResponseEntity<>(clothesService.getClothes(id), HttpStatusCode.valueOf(200));
     }
