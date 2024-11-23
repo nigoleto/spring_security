@@ -7,12 +7,12 @@ import io.security.springsecuritymaster.domain.clothes.ClothesRequestDto;
 import io.security.springsecuritymaster.domain.clothes.ClothesResponseDto;
 import io.security.springsecuritymaster.domain.user.User;
 import io.security.springsecuritymaster.repository.ClothesRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,11 +21,13 @@ public class ClothesService {
     private final ClothesRepository clothesRepository;
 
     /** 의류 등록 **/
+    @Transactional
     public Clothes addClothes(ClothesRequestDto clothesRequestDto) {
         return clothesRepository.save(convertToEntity(clothesRequestDto));
     }
 
     /** 전체 의류 조회 */
+    @Transactional
     public Page<ClothesResponseDto> getAllClothes(int page, int size, String keyword) {
         Pageable pageable = PageRequest.of(page, size);
 

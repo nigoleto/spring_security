@@ -6,9 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ClothesRepository extends JpaRepository<Clothes,Long> {
-
-    Page<Clothes> findByDeletedAtNullOrderByCreatedAtDesc(Pageable pageable);
-
     Page<Clothes> findByTitleContainsAndDeletedAtNullOrderByCreatedAtDesc(String title, Pageable pageable);
 
+    Page<Clothes> findByDeletedAtNullOrderByCreatedAtDesc(Pageable pageable);
 }
