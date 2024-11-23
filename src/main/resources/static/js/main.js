@@ -47,8 +47,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 : clothes.title
 
             const nickname = clothes.nickname;
-            // const date = new Date(clothes.createdAt).toISOString().slice(2, 16).replace("T"," ");
-            const date = clothes.createdAt;
+
+            const date = new Date(clothes.createdAt).toISOString().slice(2, 16).replace("T"," ");
 
             const viewCount = clothes.viewCount;
 
