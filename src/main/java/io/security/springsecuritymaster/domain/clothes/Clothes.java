@@ -29,6 +29,8 @@ public class Clothes extends BaseEntity {
     @Column(nullable = false, length = 5000)
     private String description;
 
+    private String address;
+
     private int viewCount = 0;
 
     public void increaseViewCount() {
