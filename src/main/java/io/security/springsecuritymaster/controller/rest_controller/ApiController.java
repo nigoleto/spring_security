@@ -20,9 +20,9 @@ public class ApiController {
     private final GwangjuService gwangjuService;
 
     /** 의류수거함 위치 생성 (추후 스케줄러로 특정시간에 받아오는걸로 변경 예정 ) **/
-    @GetMapping("/a")
-    public ResponseEntity<Void> fetchAndSaveGwangju() throws IOException {
-        pubDataApiService.fetchAndSaveData();
+    @GetMapping("/{page}")
+    public ResponseEntity<Void> fetchAndSaveGwangju(@PathVariable int page) throws IOException {
+        pubDataApiService.fetchAndSaveData(page);
         return new ResponseEntity<>(HttpStatusCode.valueOf(201));
     }
 
