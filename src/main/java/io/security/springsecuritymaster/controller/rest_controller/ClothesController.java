@@ -41,7 +41,7 @@ public class ClothesController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateClothes(@PathVariable Long id, @RequestBody ClothesRequestDto clothesRequestDto) {
+    public ResponseEntity<Void> updateClothes(@PathVariable Long id, @Valid @RequestBody ClothesRequestDto clothesRequestDto) {
 
         clothesService.updateClothes(id, clothesRequestDto);
         return new ResponseEntity<>(HttpStatusCode.valueOf(200));
