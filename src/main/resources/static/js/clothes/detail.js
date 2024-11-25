@@ -1,14 +1,16 @@
 document.addEventListener("DOMContentLoaded", function() {
     const clothesId = window.location.pathname.split("/").pop(); // URL에서 ID를 추출
+    const token = localStorage.getItem("token"); // 로컬 스토리지의 토큰 가져오기
+    console.log(clothesId);
     fetchClothesDetails(clothesId);
 
     function fetchClothesDetails(id) {
         fetch(`/api/clothes/${id}`, {
             method: 'GET',
             headers: {
+                "Authorization": `${token}`,
                 'Content-Type': 'application/json',
-            },
-            credentials: 'include'  // 세션 쿠키를 포함하여 요청
+            }
         })
             .then(response => {
                 if (!response.ok) {
@@ -41,18 +43,18 @@ document.addEventListener("DOMContentLoaded", function() {
         if(errorCode === "404") {
             document.getElementById("layout").innerHTML = `
             <header th:replace="~{layout/header::header}"></header>
-            <h3 class="error-404">삭제되었거나 존재하지 않는 에세이 입니다.</h3>
+            <h3 class="error-404"> 삭제되었거나 존재하지 않는 게시글 입니다.</h3>
         `;
         }
 
-        if(errorCode === "403") {
+        if(errorCode === "401") {
             document.getElementById("layout").innerHTML = `
             <header th:replace="~{layout/header::header}"></header>
-            <h3 class="error-404">접근 권한이 없는 에세이 입니다.</h3>
+            <h3 class="error-401">로그인 후 이용해 주세요.</h3>
+            <a href="/login"> 로그인 하러 가기 </a>
         `;
         }
     }
-
 
     const edit = document.getElementById("edit");
     edit.addEventListener("click", function() {
