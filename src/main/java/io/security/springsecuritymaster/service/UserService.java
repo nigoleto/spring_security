@@ -22,20 +22,29 @@ public class UserService implements UserDetailsService {
 
     @Override
     @Transactional
-    public User loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
-        if (user.getDeletedAt() != null) {
-            throw new BusinessException(ErrorCode.USER_DEACTIVATED);
-        }
-        if (!user.isActive()) {
-            throw new BusinessException(ErrorCode.USER_SUSPENDED);
-        }
-        return user;
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        // 이메일로 사용자 조회
+        return userRepository.findByEmail(email)
+                .map(user -> org.springframework.security.core.userdetails.User.builder()
+                        .username(user.getEmail())
+                        .password(user.getPassword())
+                        .authorities(user.getAuthorities()) // User 엔티티의 권한 목록 반환
+                        .accountExpired(false)
+                        .accountLocked(false)
+                        .credentialsExpired(false)
+                        .disabled(!user.isActive())
+                        .build())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
     }
 
     @Transactional
     public void createUser(CreateUserRequestDto requestDto) {
+        if (userRepository.existsByEmail(requestDto.email())) {
+            throw new BusinessException(ErrorCode.DUPLICATE_EMAIL);
+        }
+        if (userRepository.existsByNickname(requestDto.nickname())) {
+            throw new BusinessException(ErrorCode.DUPLICATE_NICKNAME);
+        }
 
         User user = User.builder()
                 .email(requestDto.email())
@@ -44,5 +53,18 @@ public class UserService implements UserDetailsService {
                 .build();
 
         userRepository.save(user);
+    }
+
+    @Transactional
+    public User validateUser(String email, String rawPassword) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+
+        // 비밀번호 일치 확인
+        if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
+            throw new BusinessException(ErrorCode.INVALID_PASSWORD);
+        }
+
+        return user;
     }
 }

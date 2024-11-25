@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script>
+        async function submitLogin(event) {
+            event.preventDefault(); // 기본 form 제출 방식을 막음
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const nickname = document.getElementById("nickname").value;
+
+            const response = await fetch("/api/signup", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email, password, nickname }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                alert("signup successful: " + JSON.stringify(data));
+            } else {
+                alert("signup failed");
+            }
+        }
+    </script>
+</head>
+<body>
+<h1>Sign Up</h1>
+<form onsubmit="submitLogin(event)">
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required minlength="8">
+    </div>
+    <div>
+        <label for="nickname">Nickname:</label>
+        <input type="text" id="nickname" name="nickname" placeholder="Enter your nickname" required>
+    </div>
+    <div>
+        <button type="submit">Sign Up</button>
+    </div>
+</form>
+</body>
+</html>
