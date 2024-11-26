@@ -5,6 +5,35 @@
     <title>수정</title>
 </head>
 <body>
-    <h2> 수정페이지 </h2>
+<div id="layout">
+    <h2>수정폼</h2>
+    <p id="address"></p>
+
+    <article class="write">
+        <form id="clothesForm" enctype="multipart/form-data" class="border p-4 rounded">
+            <div>
+                <label for="newTitle" class="form-label">제목</label>
+                <input type="text" id="newTitle" name="title" class="form-control" required>
+            </div>
+            <div>
+                <label for="newContent" class="form-label">내용</label>
+                <textarea id="newContent" name="content" class="form-control" rows="5" required></textarea>
+            </div>
+            <div id="attach-box">
+
+            </div>
+            <div>
+                <label for="file" class="form-label">첨부파일</label>
+                <input type="file" id="file" name="file" accept="image/*" class="form-control">
+            </div>
+            <div>
+                <a th:href="@{/}">수정취소</a>
+                <button type="button" id="submitForm">수정하기</button>
+            </div>
+        </form>
+    </article>
+</div>
+
+<script src="/js/clothes/edit.js"></script>
 </body>
 </html>
