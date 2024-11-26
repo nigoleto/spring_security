@@ -2,6 +2,7 @@ package io.security.springsecuritymaster.domain.clothes;
 
 import io.security.springsecuritymaster.domain.attach.Attach;
 import io.security.springsecuritymaster.domain.pub_data.Gwangju;
+import io.security.springsecuritymaster.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -16,6 +17,7 @@ public class ClothesResponseDto {
     private String nickname;
     private String thumbnailUrl;
     private List<Attach> attachList;
+    private User user;
     private Gwangju gwangju;
     private String title;
     private String description;
@@ -32,6 +34,7 @@ public class ClothesResponseDto {
                 .nickname(clothes.getUser().getNickname())
                 .thumbnailUrl(thumbnailUrl)
                 .attachList(clothes.getAttachList())
+                .user(clothes.getUser())
                 .gwangju(clothes.getGwangju())
                 .title(clothes.getTitle())
                 .description(clothes.getDescription())
