@@ -3,3 +3,14 @@
     flex-direction: column;
     align-items: center;
 }
+
+
+/* 첨부파일 */
+#attach { display: flex; flex-flow: column; }
+#attach img {
+    max-width: 260px;
+    border-radius: 10px;
+}
+#attach-delete { font-style: italic; }
+#attach-delete:hover { cursor: pointer; }
+

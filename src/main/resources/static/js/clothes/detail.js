@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     const clothesId = window.location.pathname.split("/").pop(); // URL에서 ID를 추출
     const token = localStorage.getItem("token"); // 로컬 스토리지의 토큰 가져오기
-    console.log(clothesId);
     fetchClothesDetails(clothesId);
 
     function fetchClothesDetails(id) {
@@ -35,6 +34,26 @@ document.addEventListener("DOMContentLoaded", function() {
         const date = new Date(clothes.createdAt);
         const formattedDate = date.toISOString().slice(0, 16).replace('T', ' ');
         document.getElementById("clothes-date").textContent = formattedDate;
+
+        // 첨부파일
+        if(clothes.attachList) {
+            const fileList = clothes.attachList;
+
+            const attachBox = document.getElementById("attach-box");
+            attachBox.innerHTML = fileList
+                .map(file => `
+                    <div id="attach">
+                        <img src="${file.fileUrl}" alt="첨부 이미지">
+                    </div>
+                `)
+                .join("");
+        }
+
+        // 수정 삭제 버튼
+        const payload = JSON.parse(atob(token.split(".")[1]));
+        if(payload.sub === clothes.user.email) {
+            document.getElementById("buttons").style.display = "block";
+        }
     }
 
     function displayClothesError(error) {
@@ -60,4 +79,29 @@ document.addEventListener("DOMContentLoaded", function() {
     edit.addEventListener("click", function() {
         window.location.href = `/clothes/${clothesId}/edit`;
     });
+
+
+    document.getElementById("delete").addEventListener("click", function() {
+
+        if(window.confirm("해당 게시글을 삭제하시겠습니까?")) {
+
+            fetch(`/api/clothes/${clothesId}`, {
+                method: 'DELETE',
+                headers: {
+                    "Authorization": `${token}`,
+                    'Content-Type': 'application/json',
+                }
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert("삭제되었습니다.")
+                        window.location.href = "/";
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching clothes details');
+                });
+        }
+
+    })
 });
