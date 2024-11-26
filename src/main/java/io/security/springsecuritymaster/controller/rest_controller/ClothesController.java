@@ -48,9 +48,14 @@ public class ClothesController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateClothes(@PathVariable Long id, @Valid @RequestBody ClothesRequestDto clothesRequestDto) {
+    public ResponseEntity<Void> updateClothes(
+            @PathVariable Long id,
+            @Valid @RequestPart(value = "clothesRequestDto") ClothesRequestDto clothesRequestDto,
+            @RequestPart(value = "file", required = false) MultipartFile attach
 
-        clothesService.updateClothes(id, clothesRequestDto);
+    ) throws IOException {
+
+        clothesService.updateClothes(id, clothesRequestDto, attach);
         return new ResponseEntity<>(HttpStatusCode.valueOf(200));
     }
 

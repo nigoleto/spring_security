@@ -104,9 +104,11 @@ public class ClothesService {
         return ClothesResponseDto.toDto(clothes);
     }
 
-    /** 의류 정보 수정 */
+    /**
+     * 의류 정보 수정
+     */
     @Transactional
-    public ClothesResponseDto updateClothes(Long id, ClothesRequestDto clothesRequestDto) {
+    public void updateClothes(Long id, ClothesRequestDto clothesRequestDto, MultipartFile attach) throws IOException {
         Clothes clothes = clothesRepository.findById(id)
                 .orElseThrow(() -> new BusinessException(ErrorCode.CLOTHES_NOT_FOUND)
         );
@@ -116,7 +118,19 @@ public class ClothesService {
                 clothesRequestDto.description()
         );
 
-        return ClothesResponseDto.toDto(clothes);
+        if (attach != null && !attach.isEmpty()) {
+            Attach newAttach = Attach.builder()
+                    .fileUrl(s3UploadService.saveFile(attach))
+                    .fileName(attach.getOriginalFilename())
+                    .fileType(attach.getContentType())
+                    .clothes(clothesRepository.save(clothes))
+                    .build();
+            attachRepository.save(newAttach);
+        } else {
+            clothesRepository.save(clothes);
+        }
+
+        ClothesResponseDto.toDto(clothes);
     }
 
     /** 의류 삭제 */
