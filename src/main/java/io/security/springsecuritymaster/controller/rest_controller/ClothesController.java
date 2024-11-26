@@ -9,6 +9,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,8 +21,12 @@ public class ClothesController {
     private final ClothesService clothesService;
 
     @PostMapping
-    public ResponseEntity<Void> addClothes(@Valid @RequestBody ClothesRequestDto clothesRequestDto) {
-        clothesService.addClothes(clothesRequestDto);
+    public ResponseEntity<Void> addClothes(
+            @RequestHeader(value = "Authorization", required = false) String authHeader,
+            @Valid @RequestPart(value = "clothesRequestDto") ClothesRequestDto clothesRequestDto,
+            @RequestPart(value = "file", required = false) MultipartFile attach
+    ) throws IOException {
+        clothesService.addClothes(authHeader, clothesRequestDto, attach);
         return new ResponseEntity<>(HttpStatusCode.valueOf(201));
     }
 

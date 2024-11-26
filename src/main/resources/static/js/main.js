@@ -1,7 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const searchForm = document.getElementById("search-container");
     const searchInput = document.getElementById("search-input");
     const clothesList = document.getElementById("clothes-list");
+    const token = localStorage.getItem("token"); // 로컬 스토리지의 토큰 가져오기
+
+    if (token) {
+        const payload = JSON.parse(atob(token.split(".")[1])); // Base64로 디코딩
+        console.log("Token payload:", payload);
+        const isExpired = payload.exp * 1000 < Date.now();
+        console.log("Token expired:", isExpired);
+    }
 
     let currentPage = 0; // 현재 페이지 번호
     const pageSize = 9; // 한 페이지에 표시할 개수
@@ -10,12 +17,12 @@ document.addEventListener("DOMContentLoaded", function () {
     // 페이지 로드 시 초기 에세이 목록 로드
     fetchPosts(currentPage, pageSize);
 
-    searchForm.addEventListener("submit", function(event) {
-        event.preventDefault(); // 페이지 새로고침 방지
-        const searchQuery = searchInput.value;
-        currentPage = 0; // 검색 시 페이지를 1페이지로 초기화
-        fetchPosts(currentPage, pageSize, searchQuery);
-    });
+    // searchForm.addEventListener("submit", function(event) {
+    //     event.preventDefault(); // 페이지 새로고침 방지
+    //     const searchQuery = searchInput.value;
+    //     currentPage = 0; // 검색 시 페이지를 1페이지로 초기화
+    //     fetchPosts(currentPage, pageSize, searchQuery);
+    // });
 
 
     // 게시글 목록 및 검색 기능 구현
@@ -25,8 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-            },
-            credentials: 'include' // 세션 포함
+            }
         })
             .then(response => response.json())
             .then(data => {
@@ -46,23 +52,51 @@ document.addEventListener("DOMContentLoaded", function () {
                 ? clothes.title.substring(0, 35) + "..."
                 : clothes.title
 
-            const nickname = clothes.nickname;
+            const content = clothes.description;
 
-            const date = new Date(clothes.createdAt).toISOString().slice(2, 16).replace("T"," ");
+            const gu = clothes.gwangju.gu;
+            const dong = clothes.gwangju.dong;
 
-            const viewCount = clothes.viewCount;
+            const thumbnailUrl = clothes.thumbnailUrl;
+
+            // const date = new Date(clothes.createdAt).toISOString().slice(2, 16).replace("T"," ");
+
+            // const viewCount = clothes.viewCount;
 
             const row = document.createElement("tr");
             row.innerHTML = `
+                        <td><img src="${thumbnailUrl}" alt="thumbnail" class="thumbnail"></td>
                         <td>${truncatedTitle}</td>
-                        <td>${nickname}</td>
-                        <td>${date}</td>
-                        <td>${viewCount}</td>
+                        <td>${gu} ${dong}</td>
+                        <td>${content}</td>
                     `;
 
-            row.addEventListener("click", function() {
-                window.location.href = `/clothes/${clothes.id}`; // 클릭 시 상세 페이지로 이동
+            // 클릭 시 상세 페이지로 이동
+            row.addEventListener("click", async () => {
+                try {
+                    const response = await fetch(`/clothes/${clothes.id}`, {
+                        method: "GET",
+                        headers: {
+                            "Authorization": `${token}`,
+                        },
+                    });
+
+                    if (response.status === 200) {
+                        window.location.href = `/clothes/${clothes.id}`;
+
+                    } else {
+                        alert("로그인이 필요합니다.");
+                        window.location.href = "/login";
+                    }
+                } catch (error) {
+                    console.error("Error:", error);
+                    alert("요청 처리 중 문제가 발생했습니다.");
+                }
             });
+            // row.addEventListener("click", function() {
+            //     window.location.href = `/clothes/${clothes.id}`;
+            // });
+
 
             clothesList.appendChild(row);
         });

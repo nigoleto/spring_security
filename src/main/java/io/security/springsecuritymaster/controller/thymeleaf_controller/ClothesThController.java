@@ -3,7 +3,9 @@ package io.security.springsecuritymaster.controller.thymeleaf_controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/clothes")
@@ -17,4 +19,10 @@ public class ClothesThController {
 
     @GetMapping("/{id}/edit")
     public String getClothesEdit() { return "clothes/edit"; }
+
+    @GetMapping("/form")
+    public String getClothesForm(@RequestParam(required = false) String address, Model model) {
+        model.addAttribute("address", address);
+        return "clothes/form";
+    }
 }

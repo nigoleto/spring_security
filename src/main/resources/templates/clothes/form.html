@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>form</title>
+</head>
+<body>
+<div id="layout">
+    <h2>작성폼</h2>
+    <p id="address" th:text="${address}"></p>
+
+    <article class="write">
+        <form id="clothesForm" enctype="multipart/form-data" class="border p-4 rounded">
+            <!--              th:action="@{/api/clothes}" method="post" enctype="multipart/form-data" class="border p-4 rounded"-->
+            <div>
+                <label for="newTitle" class="form-label">제목</label>
+                <input type="text" id="newTitle" name="title" class="form-control" required>
+            </div>
+            <div>
+                <label for="newContent" class="form-label">내용</label>
+                <textarea id="newContent" name="content" class="form-control" rows="5" required></textarea>
+            </div>
+            <div>
+                <label for="file" class="form-label">첨부파일</label>
+                <input type="file" id="file" name="file" accept="image/*" class="form-control">
+            </div>
+            <div>
+                <a th:href="@{/}">작성취소</a>
+                <button type="button" id="submitForm">작성완료</button>
+            </div>
+        </form>
+    </article>
+</div>
+
+<script>
+    document.getElementById('submitForm').addEventListener('click', async (e) => {
+        e.preventDefault();
+        const form = document.getElementById('clothesForm');
+        const formData = new FormData(form);
+
+        // address 도로명 주소만 가져오기
+        const addressElement = document.getElementById('address');
+        const fullAddress = addressElement.textContent;
+        const roadAddress = fullAddress.replace(/.*?\s.*?\s/, "");
+        const finalAddress = roadAddress.replace(/로(?=\d)/g, '로 ');
+
+        // 토큰 가져오기
+        const token = localStorage.getItem("token");
+
+        // Form에서 title과 content 값을 수집
+        const title = document.getElementById('newTitle').value;
+        const content = document.getElementById('newContent').value;
+
+        // ClothesRequestDto JSON 데이터 추가
+        const clothesRequestDto = {
+            title: title,
+            description: content,
+            address: finalAddress
+        };
+
+        // JSON 데이터는 문자열로 변환해서 FormData에 추가
+        formData.append('clothesRequestDto', new Blob([JSON.stringify(clothesRequestDto)], { type: 'application/json' }));
+
+        // 파일 데이터 추가
+        const fileInput = document.getElementById('file');
+        if (fileInput.files.length > 0) {
+            formData.append('file', fileInput.files[0]);
+        }
+
+        // FormData 내용 출력
+        for (let [key, value] of formData.entries()) {
+            console.log(key, value); // key와 value 출력
+        }
+
+        try {
+            const response = await fetch('/api/clothes', {
+                method: 'POST',
+                headers: {
+                    "Authorization": `${token}`
+                },
+                body: formData
+            });
+
+            if (response.ok) {
+                window.location.href = "/";
+                // try {
+                //     const responseData = await response.json();
+                //     console.log(responseData); // 서버 응답 내용 출력
+                // } catch (error) {
+                //     console.error("응답 처리 오류:", error);
+                //     const text = await response.text(); // 응답이 JSON이 아닌 경우 텍스트로 읽기
+                //     console.log("응답 본문:", text);
+                // }
+            } else {
+                console.error("파일 업로드 실패");
+            }
+        } catch (err) {
+            alert('서버와 통신 중 오류가 발생했습니다.');
+            console.error(err);
+        }
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const token = localStorage.getItem("token");
+        if(!token) {
+            document.getElementById("layout").innerHTML = `
+                    <header th:replace="~{layout/header::header}"></header>
+                    <h3 class="error-401">로그인 후 이용해 주세요.</h3>
+                    <a href="/login"> 로그인 하러 가기 </a>
+                `;
+        }
+    });
+</script>
+
+</body>
+</html>
