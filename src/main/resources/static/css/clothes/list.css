@@ -14,12 +14,12 @@
     border-top-right-radius: 8px;
     object-fit: cover;
 }
-#location {
+.location {
     width: 7px;
     height: 9px;
 }
-#favorite {
-    width: 20px;
+.favorite {
+    width: 21px;
     height: 20px;
 }
 .clothes-address {
@@ -36,4 +36,4 @@
     border-top: #DADADA 2px solid;
 }
 .clothes-item div {display: flex;align-items: baseline;}
-.clothes-item:hover {cursor: pointer;}
+.clothes-title:hover, .clothes-content:hover, .thumbnail, .favorite {cursor: pointer;}

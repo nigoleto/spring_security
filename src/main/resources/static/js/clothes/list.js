@@ -60,40 +60,39 @@ document.addEventListener("DOMContentLoaded", function () {
                         <div class="clothes-title-box">
                             <div>
                                 <span class="clothes-title">${truncatedTitle}</span>
-                                <img id="location" src="/img/Location.png" alt="location-image">
+                                <img class="location" src="/img/Location.png" alt="location-image">
                                 <span class="clothes-address">${gu} ${dong}</span>
                             </div>
-                            <img id="favorite" src="/img/Star_off.png" alt="add-favorite">
+                            <img class="favorite" src="/img/Star_off.png" alt="add-favorite">
                         </div>
                         <p class="clothes-content">${content}</p>
                     `;
 
             // 클릭 시 상세 페이지로 이동
-            row.addEventListener("click", async () => {
-                try {
-                    const response = await fetch(`/clothes/${clothes.id}`, {
-                        method: "GET",
-                        headers: {
-                            "Authorization": `${token}`,
-                        },
-                    });
+            const clickableElements = row.querySelectorAll(".thumbnail, .clothes-title, .clothes-content");
+            clickableElements.forEach( (e) => {
+                e.addEventListener("click", async () => {
+                    try {
+                        const response = await fetch(`/clothes/${clothes.id}`, {
+                            method: "GET",
+                            headers: {
+                                "Authorization": `${token}`,
+                            },
+                        });
 
-                    if (response.status === 200) {
-                        window.location.href = `/clothes/${clothes.id}`;
+                        if (response.status === 200) {
+                            window.location.href = `/clothes/${clothes.id}`;
 
-                    } else {
-                        alert("로그인이 필요합니다.");
-                        window.location.href = "/login";
+                        } else {
+                            alert("로그인이 필요합니다.");
+                            window.location.href = "/login";
+                        }
+                    } catch (error) {
+                        console.error("Error:", error);
+                        alert("요청 처리 중 문제가 발생했습니다.");
                     }
-                } catch (error) {
-                    console.error("Error:", error);
-                    alert("요청 처리 중 문제가 발생했습니다.");
-                }
-            });
-            // row.addEventListener("click", function() {
-            //     window.location.href = `/clothes/${clothes.id}`;
-            // });
-
+                });
+            })
 
             clothesList.appendChild(row);
         });
