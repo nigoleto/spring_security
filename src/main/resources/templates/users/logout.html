@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>logout</title>
+</head>
+<body>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        localStorage.removeItem("token");
+        window.location.href = "/";
+    })
+</script>
+</body>
+</html>

@@ -20,8 +20,8 @@
             });
 
             if (response.ok) {
-                const data = await response.json();
-                alert("signup successful: " + JSON.stringify(data));
+                alert("signup successful: ");
+                window.location.href = "/";
             } else {
                 alert("signup failed");
             }

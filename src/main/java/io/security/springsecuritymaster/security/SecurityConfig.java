@@ -29,7 +29,7 @@ public class SecurityConfig {
         return http.csrf(AbstractHttpConfigurer::disable).cors(AbstractHttpConfigurer::disable).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(api -> api
                         .requestMatchers("/css/**", "/js/**", "/img/**", "/static/**").permitAll()
-                        .requestMatchers("/api/login", "/api/clothes", "/api/gwangju").permitAll()
+                        .requestMatchers("/api/login", "/api/signup" ,"/api/clothes", "/api/gwangju").permitAll()
                         .requestMatchers("/clothes/**").permitAll()
                         .requestMatchers("/signup", "/login", "/", "/forgot-password").permitAll()
                         .requestMatchers("/api/gwangju/*").hasAnyRole("ADMIN")
