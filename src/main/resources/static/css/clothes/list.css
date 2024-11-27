@@ -19,7 +19,7 @@
     height: 9px;
     margin: 0 2px
 }
-.favorite {
+.favorite-on, .favorite-off {
     width: 21px;
     height: 20px;
 }
@@ -37,4 +37,4 @@
     border-top: #DADADA 2px solid;
 }
 .clothes-item div {display: flex;align-items: baseline;}
-.clothes-title:hover, .clothes-content:hover, .thumbnail, .favorite {cursor: pointer;}
+.clothes-title:hover, .clothes-content:hover, .thumbnail, .favorite-on, .favorite-off {cursor: pointer;}
