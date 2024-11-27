@@ -17,6 +17,7 @@
 .location {
     width: 7px;
     height: 9px;
+    margin: 0 2px
 }
 .favorite {
     width: 21px;
