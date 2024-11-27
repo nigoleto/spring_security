@@ -13,6 +13,7 @@ public enum ErrorCode {
     DUPLICATE_NICKNAME(409, "Nickname is already in use"),
     INVALID_PASSWORD(400, "invalid password"),
     CLOTHES_NOT_FOUND(404, "clothes not found"),
+    COMMENT_NOT_FOUND(404, "comment not found"),
     ALREADY_DELETED(400, "Already deleted entity"),
     ALREADY_LIKED(400, "Already liked post");
 
