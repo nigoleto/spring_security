@@ -15,4 +15,9 @@ public class UserThController {
     public String signup() {
         return "users/signup";
     }
+
+    @GetMapping("/logout")
+    public String logout() {
+        return "users/logout";
+    }
 }
