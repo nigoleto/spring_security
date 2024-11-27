@@ -111,8 +111,43 @@ input:focus {
     background: none;
 }
 
+
+/* 의류 게시글 목록*/
+.clothes-item {
+    display: flex;
+    border: #DADADA 1px solid;
+    border-radius: 8px;
+    flex-direction: column;
+    width: 265px;
+    height: 290px;
+}
 .thumbnail {
-    width: 260px;
+    width: 265px;
     height: 191px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
     object-fit: cover;
 }
+#location {
+    width: 7px;
+    height: 9px;
+}
+#favorite {
+    width: 20px;
+    height: 20px;
+}
+.clothes-address {
+    color: #939393;
+    font-size: 9px;
+}
+.clothes-title { font-size: 13px; font-weight: bold;}
+.clothes-content { font-size: 12px; margin: 0 9px;}
+.clothes-title-box {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 10px 9px;
+    border-top: #DADADA 2px solid;
+}
+.clothes-item div {display: flex;align-items: baseline;}
+.clothes-item:hover {cursor: pointer;}

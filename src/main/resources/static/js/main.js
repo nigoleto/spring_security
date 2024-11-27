@@ -17,14 +17,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // 페이지 로드 시 초기 에세이 목록 로드
     fetchPosts(currentPage, pageSize);
 
-    // searchForm.addEventListener("submit", function(event) {
-    //     event.preventDefault(); // 페이지 새로고침 방지
-    //     const searchQuery = searchInput.value;
-    //     currentPage = 0; // 검색 시 페이지를 1페이지로 초기화
-    //     fetchPosts(currentPage, pageSize, searchQuery);
-    // });
-
-
     // 게시글 목록 및 검색 기능 구현
     function fetchPosts(page, pageSize, searchQuery = "") {
 
@@ -37,8 +29,8 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(response => response.json())
             .then(data => {
                 displayPosts(data.content);
-                totalPages = data.totalPages; // 서버에서 받은 총 페이지 수 업데이트
-                updatePagination(data.number, totalPages);
+                totalPages = data.page.totalPages; // 서버에서 받은 총 페이지 수 업데이트
+                updatePagination(data.page.number, totalPages);
             })
             .catch(error => console.error("Error fetching posts:", error));
     }
@@ -48,8 +40,8 @@ document.addEventListener("DOMContentLoaded", function () {
         clothesList.innerHTML = ""; // 기존 목록 초기화
 
         contents.forEach(clothes => {
-            const truncatedTitle = clothes.title.length > 35
-                ? clothes.title.substring(0, 35) + "..."
+            const truncatedTitle = clothes.title.length > 12
+                ? clothes.title.substring(0, 12) + "..."
                 : clothes.title
 
             const content = clothes.description;
@@ -59,16 +51,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const thumbnailUrl = clothes.thumbnailUrl;
 
-            // const date = new Date(clothes.createdAt).toISOString().slice(2, 16).replace("T"," ");
 
-            // const viewCount = clothes.viewCount;
-
-            const row = document.createElement("tr");
+            const row = document.createElement("div");
+            row.className = "clothes-item"
             row.innerHTML = `
-                        <td><img src="${thumbnailUrl}" alt="thumbnail" class="thumbnail"></td>
-                        <td>${truncatedTitle}</td>
-                        <td>${gu} ${dong}</td>
-                        <td>${content}</td>
+                        <img src="${thumbnailUrl}" alt="thumbnail" class="thumbnail">
+                        <div class="clothes-title-box">
+                            <div>
+                                <span class="clothes-title">${truncatedTitle}</span>
+                                <img id="location" src="/img/Location.png" alt="location-image">
+                                <span class="clothes-address">${gu} ${dong}</span>
+                            </div>
+                            <img id="favorite" src="/img/Star_off.png" alt="add-favorite">
+                        </div>
+                        <p class="clothes-content">${content}</p>
                     `;
 
             // 클릭 시 상세 페이지로 이동
@@ -123,7 +119,7 @@ document.addEventListener("DOMContentLoaded", function () {
         firstButton.addEventListener('click', function() {
             if (currentPage > 0) {
                 currentPage = 0;
-                fetchPosts(currentPage, pageSize, searchInput.value);
+                fetchPosts(currentPage, pageSize);
             }
         });
         pageContainer.appendChild(firstButton);
@@ -135,7 +131,7 @@ document.addEventListener("DOMContentLoaded", function () {
             pageButton.disabled = i === currentPage;  // 현재 페이지는 비활성화
             pageButton.addEventListener('click', function() {
                 currentPage = i;
-                fetchPosts(currentPage, pageSize, searchInput.value);
+                fetchPosts(currentPage, pageSize);
             });
             pageContainer.appendChild(pageButton);
         }
@@ -148,7 +144,7 @@ document.addEventListener("DOMContentLoaded", function () {
         lastButton.addEventListener('click', function() {
             if (currentPage < totalPages - 1) {
                 currentPage = totalPages - 1;
-                fetchPosts(currentPage, pageSize, searchInput.value);
+                fetchPosts(currentPage, pageSize);
             }
         });
         pageContainer.appendChild(lastButton);
