@@ -44,7 +44,7 @@ public class CommentService {
         Comment newComment = Comment.builder()
                 .user(user)
                 .clothes(clothes)
-                .content(commentRequestDto.comment())
+                .content(commentRequestDto.content())
                 .build();
 
         commentRepository.save(newComment);

@@ -1,5 +1,6 @@
 package io.security.springsecuritymaster.domain.comment;
 
+import io.security.springsecuritymaster.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -9,13 +10,17 @@ import java.time.LocalDateTime;
 @Builder
 public class CommentResponseDto {
 
-    private String nickName;
+    private Long Id;
+    private String email;
+    private String nickname;
     private String content;
     private LocalDateTime createdAt;
 
     public static CommentResponseDto toDto(Comment comment) {
         return CommentResponseDto.builder()
-                .nickName(comment.getUser().getNickname())
+                .Id(comment.getId())
+                .email(comment.getUser().getEmail())
+                .nickname(comment.getUser().getNickname())
                 .content(comment.getContent())
                 .createdAt(comment.getCreatedAt())
                 .build();
