@@ -39,11 +39,49 @@ document.addEventListener("DOMContentLoaded", function() {
             attachBox.innerHTML = fileList
                 .map(file => `
                         <div id="attach">
-                        <div> <span>${file.fileName} </span><a id="attach-delete"> 삭제</a> </div> 
+                        <form> 
+                            <span>${file.fileName} </span>
+                            <a href="#" class="attach-delete" data-filename="${file.fileName}" data-clothesid="${clothes.id}">삭제</a>
+                        </form> 
                         <img src="${file.fileUrl}" alt="첨부 이미지">
                         </div>
                     `)
                 .join("");
+
+            // Event Delegation: attach-box의 삭제 링크만 이벤트 처리
+            attachBox.addEventListener("click", async (e) => {
+                const target = e.target;
+
+                // 클릭한 요소가 <a class="attach-delete">인지 확인
+                if (target.tagName === "A" && target.classList.contains("attach-delete")) {
+                    e.preventDefault();
+
+                    const fileName = target.dataset.filename;
+                    const clothesId = target.dataset.clothesid;
+
+                    if (window.confirm("해당 첨부파일이 해당 게시글에서 바로 삭제됩니다.")) {
+                        // 첨부파일 삭제 API 호출
+                        try {
+                            const response = await fetch(`/api/attach?fileName=${fileName}&clothesId=${clothesId}`, {
+                                method: 'DELETE',
+                                headers: {
+                                    "Authorization": `${token}`
+                                }
+                            });
+
+                            if (response.ok) {
+                                alert("첨부파일이 삭제되었습니다.");
+                                fetchClothesDetails(clothesId);
+                            } else {
+                                console.error("첨부파일 삭제 실패");
+                            }
+                        } catch (err) {
+                            alert('서버와 통신 중 오류가 발생했습니다.');
+                            console.error(err);
+                        }
+                    }
+                }
+            });
         }
 
     }

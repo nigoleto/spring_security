@@ -114,4 +114,5 @@ input:focus {
 .thumbnail {
     width: 260px;
     height: 191px;
+    object-fit: cover;
 }
