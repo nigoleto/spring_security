@@ -1,9 +1,37 @@
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+body{
+    letter-spacing: -1px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 main {
     padding: 10px 30px;
 }
 header {
-    padding: 30px 30px 0;
+    display: flex;
+    justify-content: center;
+    font-family: Pretendard-Regular, sans-serif;
+    flex-direction: column;
+    padding: 52px 30px 10px;
+    width: 1000px;
 }
+
+header h1 {
+    font-size: 26px;
+    letter-spacing: -2px;
+    color: #404040;
+    margin: 2px;
+}
+
 .map_wrap, .map_wrap * {
     margin:0;
     padding:0;
@@ -11,27 +39,40 @@ header {
     font-size:12px;
 }
 .map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
-.map_wrap {display:flex;position:relative;width:100%;height:500px;}
+.map_wrap {display:flex;position:relative;width: 1000px;height: 540px;}
 #map {border-radius: 12px;border: 1px solid #cfcfcf;}
-#menu_wrap {position:absolute;top:0;left:0;bottom:0;width:270px;padding:33px 21px;overflow-y:auto;background: #FAFAFA;z-index: 2;font-size:12px;border-top-left-radius: 12px;border-bottom-left-radius: 12px;box-shadow: 1px 1px 3px gray;}
+#menu_wrap {position:absolute;top:0;left:0;bottom:0;width:270px;padding:33px 21px;background: #FAFAFA;z-index: 2;font-size:12px;border-top-left-radius: 12px;border-bottom-left-radius: 12px;box-shadow: 1px 1px 3px gray;}
 .bg_white {background:#fff;}
 #menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
 #menu_wrap .option{text-align: center;}
 #menu_wrap .option p {margin:10px 0;}
 #menu_wrap .option button {margin-left:5px;}
 #placesList li {list-style: none;}
-#placesList .item {position:relative;border-bottom:1px solid #888;overflow: hidden;cursor: pointer;min-height: 65px;}
+#placesList .item {position:relative;overflow: hidden;cursor: pointer;min-height: 65px; padding: 0 20px;}
 #placesList .item span {display: block;margin-top:4px;}
 #placesList .item h5, #placesList .item .info {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
-#placesList .item .info{padding:10px 0 10px 55px;}
+#placesList .item .info{padding:12px 0 10px 3px;border-bottom: 1px solid #888;}
 #placesList .info .gray {color:#8a8a8a;}
 #placesList .info .jibun {padding-left:26px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;}
 #pagination {margin:10px auto;text-align: center;}
 #pagination a {display:inline-block;margin-right:10px;}
 #pagination .on {font-weight: bold; cursor: default;color:#777;}
+#search-result {
+    position: absolute;
+    top: 62px;
+    width: 268px;
+    height: 200px;
+    overflow-y: auto;
+    background: white;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-left: #CECECE 1px solid;
+    border-bottom: #CECECE 1px solid;
+    border-right: #CECECE 1px solid;
+    padding-top: 10px;
+}
 .search-form {
     display: flex;
-    margin: 10px 0 30px;
     padding: 0 10px;
     height: 34px;
     border-radius: 8px;
@@ -129,8 +170,8 @@ input:focus {
     object-fit: cover;
 }
 .location {
-    width: 7px;
-    height: 9px;
+    width: 9px;
+    height: 10px;
     margin: 0 2px
 }
 .favorite-on, .favorite-off {
@@ -139,9 +180,9 @@ input:focus {
 }
 .clothes-address {
     color: #939393;
-    font-size: 9px;
+    font-size: 10px;
 }
-.clothes-title { font-size: 13px; font-weight: bold;}
+.clothes-title { font-size: 14px; font-weight: bold;}
 .clothes-content { font-size: 12px; margin: 0 9px;}
 .clothes-title-box {
     display: flex;

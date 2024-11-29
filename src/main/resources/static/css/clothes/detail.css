@@ -1,3 +1,7 @@
+body{
+    letter-spacing: -1px;
+}
+
 #layout {
     display: flex;
     flex-direction: column;

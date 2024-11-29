@@ -7,7 +7,8 @@
 </head>
 <body>
     <header>
-        <h1>주변 의류수거함 찾기</h1>
+        <h1>내 주변에 있는</h1>
+        <h1>의류수거함을 찾아보세요</h1>
     </header>
 
     <main>
@@ -15,15 +16,16 @@
             <div id="menu_wrap" class="bg_white">
                 <div class="option">
                     <div>
-                        <form class="search-form" onsubmit="searchPlaces(); return false;">
+                        <form class="search-form" id="search-form" onsubmit="searchPlaces(); return false;">
                             <input type="text" value="상무고등학교" id="keyword" size="12" placeholder="주소를 입력하세요">
                             <button type="submit" class="search-button"></button>
                         </form>
                     </div>
                 </div>
-                <hr>
-                <ul id="placesList"></ul>
-                <div id="pagination"></div>
+                <div id="search-result" style="display: none;">
+                    <ul id="placesList"></ul>
+                    <div id="pagination"></div>
+                </div>
             </div>
 
             <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
@@ -308,33 +310,6 @@
                 });
             }
 
-
-
-        // }
-
-        // // 사용자 위치 요청 및 지도 초기화
-        // function getUserLocation() {
-        //     if (navigator.geolocation) {
-        //         navigator.geolocation.getCurrentPosition(
-        //             position => {
-        //                 const lat = position.coords.latitude; // 위도
-        //                 const lng = position.coords.longitude; // 경도
-        //                 initMap(lat, lng); // 사용자 위치로 지도 초기화
-        //             },
-        //             error => {
-        //                 // 기본 위치로 지도 초기화
-        //                 initMap(35.1598, 126.8516); // 광주 중심 좌표
-        //             }
-        //         );
-        //     } else {
-        //         alert('사용자의 위치 정보를 지원하지 않는 브라우저입니다. 기본 위치로 설정합니다.');
-        //         // 기본 위치로 지도 초기화
-        //         initMap(35.1598, 126.8516); // 광주 중심 좌표
-        //     }
-        // }
-        //
-        // // 지도 초기화
-        // getUserLocation();
     </script>
 
     <!--게시글 스크립트-->

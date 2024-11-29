@@ -208,4 +208,20 @@ document.addEventListener("DOMContentLoaded", function () {
         pageContainer.appendChild(lastButton);
     }
 
+
+
+    const clickElements = [
+        document.getElementById("search-form"),
+        document.getElementById("search-result")
+    ]
+    document.addEventListener("click", function(e) {
+        const isExcluded = clickElements.some((el) => el.contains(e.target));
+
+        if (isExcluded) {
+            document.getElementById("search-result").style.display = "block";
+        } else {
+            document.getElementById("search-result").style.display = "none";
+        }
+    })
+
 })

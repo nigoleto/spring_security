@@ -1,3 +1,7 @@
+body{
+    letter-spacing: -1px;
+}
+
 /* 의류 게시글 목록*/
 .clothes-item {
     display: flex;
@@ -15,8 +19,8 @@
     object-fit: cover;
 }
 .location {
-    width: 7px;
-    height: 9px;
+    width: 9px;
+    height: 10px;
     margin: 0 2px
 }
 .favorite-on, .favorite-off {
@@ -25,9 +29,9 @@
 }
 .clothes-address {
     color: #939393;
-    font-size: 9px;
+    font-size: 10px;
 }
-.clothes-title { font-size: 13px; font-weight: bold;}
+.clothes-title { font-size: 14px; font-weight: bold;}
 .clothes-content { font-size: 12px; margin: 0 9px;}
 .clothes-title-box {
     display: flex;
