@@ -41,11 +41,11 @@ header h1 {
 .map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
 .map_wrap {display:flex;position:relative;width: 1000px;height: 540px;}
 #map {border-radius: 12px;border: 1px solid #cfcfcf;}
-#menu_wrap {position:absolute;top:0;left:0;bottom:0;width:270px;padding:33px 21px;background: #FAFAFA;z-index: 2;font-size:12px;border-top-left-radius: 12px;border-bottom-left-radius: 12px;box-shadow: 1px 1px 3px gray;}
+#menu_wrap {position:absolute;top:0;left:0;bottom:0;width:270px;padding:40px 21px;background: #FAFAFA;z-index: 2;font-size:12px;border-top-left-radius: 12px;border-bottom-left-radius: 12px;box-shadow: 1px 1px 3px gray;}
 .bg_white {background:#fff;}
 #menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
 #menu_wrap .option{text-align: center;}
-#menu_wrap .option p {margin:10px 0;}
+/*#menu_wrap .option p {margin:10px;}*/
 #menu_wrap .option button {margin-left:5px;}
 #placesList li {list-style: none;}
 #placesList .item {position:relative;overflow: hidden;cursor: pointer;min-height: 65px; padding: 0 20px;}
@@ -183,7 +183,7 @@ input:focus {
     font-size: 10px;
 }
 .clothes-title { font-size: 14px; font-weight: bold;}
-.clothes-content { font-size: 12px; margin: 0 9px;}
+.clothes-content { font-size: 12px; margin: 0 9px; text-align: start;}
 .clothes-title-box {
     display: flex;
     align-items: baseline;
@@ -193,3 +193,12 @@ input:focus {
 }
 .clothes-item div {display: flex;align-items: baseline;}
 .clothes-title:hover, .clothes-content:hover, .thumbnail, .favorite-on, .favorite-off {cursor: pointer;}
+#table {margin: 37px 0;
+    height: 427px;
+    overflow-y: auto;
+    width: 289px;}
+#clothes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
