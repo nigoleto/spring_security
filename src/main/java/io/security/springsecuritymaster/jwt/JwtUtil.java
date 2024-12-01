@@ -53,4 +53,17 @@ public class JwtUtil {
                 .getBody()
                 .getSubject();
     }
+
+    public String generateEmailVerificationToken(String email) {
+        Date now = new Date();
+        Date expDate = new Date(now.getTime() + 5 * 60 * 1000); // 5분 유효기간
+
+        return Jwts.builder()
+                .setSubject(email)
+                .claim("isEmailVerification", true)
+                .setIssuedAt(now)
+                .setExpiration(expDate)
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
+    }
 }

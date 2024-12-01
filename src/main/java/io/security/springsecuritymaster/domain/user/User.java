@@ -39,11 +39,15 @@ public class User extends BaseEntity implements UserDetails {
     @Column(nullable = false)
     private boolean isActive = true;
 
+    @Column(nullable = false)
+    private boolean isEmailVerified = false;
+
     @Builder
-    private User(String email, String password, String nickname) {
+    private User(String email, String password, String nickname, boolean isEmailVerified) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
+        this.isEmailVerified = isEmailVerified;
     }
 
     public User(Long id) {

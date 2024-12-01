@@ -67,4 +67,29 @@ public class UserService implements UserDetailsService {
 
         return user;
     }
+
+    @Transactional
+    public void changePassword(String email, String rawPassword, String newPassword) {
+
+    }
+
+    @Transactional
+    public void changeNickname(String email, String nickname) {
+
+    }
+
+    @Transactional
+    public void markEmailAsVerified(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
+
+        User verifiedUser = User.builder()
+                .email(user.getEmail())
+                .password(user.getPassword())
+                .nickname(user.getNickname())
+                .isEmailVerified(true)
+                .build();
+
+        userRepository.save(verifiedUser);
+    }
 }
