@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
+    private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -52,6 +53,8 @@ public class UserService implements UserDetailsService {
                 .nickname(requestDto.nickname())
                 .build();
 
+        emailService.sendEmailVerification(requestDto.email());
+
         userRepository.save(user);
     }
 
@@ -83,13 +86,8 @@ public class UserService implements UserDetailsService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
 
-        User verifiedUser = User.builder()
-                .email(user.getEmail())
-                .password(user.getPassword())
-                .nickname(user.getNickname())
-                .isEmailVerified(true)
-                .build();
+        user.verifiedUser();
 
-        userRepository.save(verifiedUser);
+        userRepository.save(user);
     }
 }

@@ -72,4 +72,8 @@ public class User extends BaseEntity implements UserDetails {
         this.isActive = false;
     }
 
+    public void verifiedUser() {
+        this.isEmailVerified = true;
+    }
+
 }
