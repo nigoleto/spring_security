@@ -59,7 +59,7 @@ header h1 {
 #pagination .on {font-weight: bold; cursor: default;color:#777;}
 #search-result {
     position: absolute;
-    top: 62px;
+    top: 70px;
     width: 268px;
     height: 200px;
     overflow-y: auto;
@@ -70,6 +70,7 @@ header h1 {
     border-bottom: #CECECE 1px solid;
     border-right: #CECECE 1px solid;
     padding-top: 10px;
+    text-align: start;
 }
 .search-form {
     display: flex;
