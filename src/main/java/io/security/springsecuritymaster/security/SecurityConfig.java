@@ -31,7 +31,7 @@ public class SecurityConfig {
                         .requestMatchers("/css/**", "/js/**", "/img/**", "/static/**").permitAll()
                         .requestMatchers("/api/login", "/api/signup" ,"/api/clothes", "/api/gwangju").permitAll()
                         .requestMatchers("/clothes/**").permitAll()
-                        .requestMatchers("/signup", "/login", "/", "/forgot-password").permitAll()
+                        .requestMatchers("/signup", "/login", "/", "/forgot-password", "verify-email").permitAll()
                         .requestMatchers("/api/gwangju/*").hasAnyRole("ADMIN")
                         .anyRequest().authenticated()
                 )
