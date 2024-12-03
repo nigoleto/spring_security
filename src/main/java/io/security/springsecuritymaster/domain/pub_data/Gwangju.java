@@ -18,7 +18,7 @@ public class Gwangju {
     @Column(nullable = false)
     private String address; // 주소
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String dong; // 동
 
     @Column

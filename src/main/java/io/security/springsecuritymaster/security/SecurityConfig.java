@@ -32,7 +32,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/login", "/api/signup" ,"/api/clothes", "/api/gwangju").permitAll()
                         .requestMatchers("/clothes/**").permitAll()
                         .requestMatchers("/signup", "/login", "/logout" , "/", "/forgot-password", "verify-email").permitAll()
-                        .requestMatchers("/api/gwangju/*").hasAnyRole("ADMIN")
+                        .requestMatchers("/api/gwangju/*").hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(AbstractHttpConfigurer::disable)

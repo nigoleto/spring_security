@@ -1,9 +1,7 @@
 package io.security.springsecuritymaster.jwt;
 
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
 
@@ -34,12 +32,20 @@ public class JwtUtil {
                 .compact();
     }
 
-    public static Claims validateToken(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+    public static Claims validateToken(String token) throws Exception {
+
+
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (ExpiredJwtException e) {
+            throw new Exception("Token expired", e);
+        } catch (JwtException e) {
+            throw new Exception("Token invalid", e);
+        }
     }
 
     public String getEmailFromToken(String token) {

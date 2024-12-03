@@ -240,4 +240,23 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     })
 
+
+    document.getElementById("pub-data-api").addEventListener("submit", function (e) {
+        e.preventDefault();
+        const number = document.getElementById("pub-data-input").value;
+        fetch(`/api/gwangju/${number}`, {
+            method: 'GET',
+            headers: {
+                "Authorization": `${token}`
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                } else {
+                    alert("pub data 불러오기 성공");
+                }
+            })
+            .catch(error => console.error("Error fetching pubdata:", error));
+    })
 })
