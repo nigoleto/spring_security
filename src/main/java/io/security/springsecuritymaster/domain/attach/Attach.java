@@ -17,6 +17,7 @@ public class Attach {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "file_id")
     private Long fileId;
 
     private String fileName;
