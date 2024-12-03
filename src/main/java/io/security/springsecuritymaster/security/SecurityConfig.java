@@ -31,13 +31,19 @@ public class SecurityConfig {
                         .requestMatchers("/css/**", "/js/**", "/img/**", "/static/**").permitAll()
                         .requestMatchers("/api/login", "/api/signup" ,"/api/clothes", "/api/gwangju").permitAll()
                         .requestMatchers("/clothes/**").permitAll()
-                        .requestMatchers("/signup", "/login", "/", "/forgot-password", "verify-email").permitAll()
+                        .requestMatchers("/signup", "/login", "/logout" , "/", "/forgot-password", "verify-email").permitAll()
                         .requestMatchers("/api/gwangju/*").hasAnyRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
-                .logout(logout -> logout.logoutUrl("/logout"))
+//                .logout(logout -> logout.logoutUrl("/logout"))
+                .logout(logout -> logout
+                        .logoutUrl("/custom-logout") // Spring Security의 기본 로그아웃 URL을 덮어씀
+                        .invalidateHttpSession(true)
+                        .clearAuthentication(true)
+                        .logoutSuccessUrl("/") // 필요하다면 성공 시 리다이렉트 설정 가능
+                )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // JWT 필터 등록
                 .exceptionHandling(exceptions -> exceptions
                         .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))

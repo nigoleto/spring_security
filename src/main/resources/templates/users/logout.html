@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>logout</title>
 </head>
 <body>
+<h3>로그아웃 되었습니다.</h3>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         localStorage.removeItem("token");
-        window.location.href = "/";
+        // window.location.href = "/";
     })
 </script>
 </body>

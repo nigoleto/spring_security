@@ -20,8 +20,8 @@
             });
 
             if (response.ok) {
-                alert("signup successful: ");
-                window.location.href = "/";
+                alert(`${email}로 인증메일이 전송되었습니다. 횐가입을 완료하기 위해 전송된 메일의 인증링크를 클릭해 주세요`);
+                window.location.href = "/login";
             } else {
                 alert("signup failed");
             }
