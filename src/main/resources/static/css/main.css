@@ -21,7 +21,7 @@ header {
     justify-content: center;
     font-family: Pretendard-Regular, sans-serif;
     flex-direction: column;
-    padding: 52px 30px 10px;
+    padding: 80px 30px 10px;
     width: 1000px;
 }
 
@@ -184,12 +184,12 @@ input:focus {
     font-size: 10px;
 }
 .clothes-title { font-size: 14px; font-weight: bold;}
-.clothes-content { font-size: 12px; margin: 0 9px; text-align: start;}
+.clothes-content { font-size: 12px; margin: 0 11px; text-align: start;}
 .clothes-title-box {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    padding: 10px 9px;
+    padding: 10px 11px;
     border-top: #DADADA 2px solid;
 }
 .clothes-item div {display: flex;align-items: baseline;}
@@ -211,4 +211,12 @@ input:focus {
 #paginationContainer button {
     border: none;
     background: none;
+    cursor: pointer;
+}
+
+nav {
+    font-family: Pretendard-Regular, sans-serif;
+    position: fixed;
+    top: 0;
+    left: 0;
 }
