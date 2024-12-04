@@ -6,12 +6,14 @@
     <link rel="stylesheet" href="/css/clothes/list.css">
 </head>
 <body>
-    <h2>목록 페이지</h2>
+    <nav th:replace="~{layout/header::header}"></nav>
 
-    <div>
+    <h1>의류 목록</h1>
+
+    <div class="list-container">
         <form id="search-container" class="search-container">
-            <input type="text" id="search-input" class="search-input" placeholder="search">
-            <button type="submit" id="search-button" class="search-button">search</button>
+            <input type="text" id="search-input" class="search-input" placeholder="검색">
+            <button type="submit" id="search-button" class="search-button"></button>
         </form>
 
         <div id="table">

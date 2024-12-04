@@ -1,5 +1,14 @@
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
 body{
+    font-family: Pretendard-Regular, sans-serif;
     letter-spacing: -1px;
+    padding: 0 40px;
 }
 
 /* 의류 게시글 목록*/
@@ -32,13 +41,84 @@ body{
     font-size: 10px;
 }
 .clothes-title { font-size: 14px; font-weight: bold;}
-.clothes-content { font-size: 12px; margin: 0 9px;}
+.clothes-content { font-size: 12px; margin: 0 11px; text-align: start;}
 .clothes-title-box {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    padding: 10px 9px;
+    padding: 10px 11px;
     border-top: #DADADA 2px solid;
 }
 .clothes-item div {display: flex;align-items: baseline;}
 .clothes-title:hover, .clothes-content:hover, .thumbnail, .favorite-on, .favorite-off {cursor: pointer;}
+
+#clothes-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+h1 {
+    padding: 80px 0 20px;
+    font-size: 26px;
+    letter-spacing: -2px;
+    color: #404040;
+    margin: 2px;
+}
+
+.search-button {
+    all: unset;
+    width: 17px;
+    height: 16px;
+    background-image: url('../../img/search_icon.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+}
+.search-button:hover {
+    filter: brightness(1.2);
+}
+
+/* 클릭 및 포커스 시 스타일 유지 */
+input:focus {
+    outline: none;
+    background: none;
+}
+
+.search-container {
+    display: flex;
+    padding: 0 10px;
+    height: 34px;
+    border-radius: 8px;
+    border: #CECECE 1px solid;
+    background: white;
+    justify-content: space-between;
+    align-items: center;
+    width: 300px;
+    margin: 10px 0 20px;
+}
+.search-container input {
+    width: 100%;
+    border: none;
+    background: none;
+}
+
+.list-container {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    margin: 0 auto;
+    max-width: 1000px;
+}
+
+#paginationContainer {
+    margin: 15px 0;
+}
+
+#paginationContainer button {
+    border: none;
+    background: none;
+    cursor: pointer;
+}

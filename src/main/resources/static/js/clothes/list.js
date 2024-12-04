@@ -72,90 +72,106 @@ document.addEventListener("DOMContentLoaded", function () {
             const favoriteOn = row.querySelector(".favorite-on");
             const favoriteOff = row.querySelector(".favorite-off");
 
-            // 내 좋아요 게시글 조회
-            fetch(`/api/favorite`, {
-                method: 'GET',
-                headers: {
-                    "Authorization": `${token}`,
-                    'Content-Type': 'application/json',
-                }
-            })
-                .then(response => response.json())
-                .then(data => {
-                    for(let i = 0; i < data.length; i++) {
-                        if(data[i] === clothes.id) {
-                            favoriteOn.style.display = "block";
-                            favoriteOff.style.display = "none";
-                            break;
-                        }
-                    }
-                })
-                .catch(error => console.error("Error fetching favorite:", error));
-
-            // 클릭 시 좋아요
-            favoriteOff.addEventListener("click", function () {
-                fetch(`/api/favorite/${clothes.id}`, {
-                    method: 'POST',
+            if(token) {
+                // 내 좋아요 게시글 조회
+                fetch(`/api/favorite`, {
+                    method: 'GET',
                     headers: {
                         "Authorization": `${token}`,
                         'Content-Type': 'application/json',
                     }
                 })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error(`HTTP error! status: ${response.status}`);
-                        } else {
-                            fetchPosts(currentPage, pageSize);
+                    .then(response => response.json())
+                    .then(data => {
+                        for (let i = 0; i < data.length; i++) {
+                            if (data[i] === clothes.id) {
+                                favoriteOn.style.display = "block";
+                                favoriteOff.style.display = "none";
+                                break;
+                            }
                         }
                     })
                     .catch(error => console.error("Error fetching favorite:", error));
-            })
 
-            // 클릭 시 좋아요 삭제
-            favoriteOn.addEventListener("click", function () {
-                fetch(`/api/favorite/${clothes.id}`, {
-                    method: 'DELETE',
-                    headers: {
-                        "Authorization": `${token}`,
-                        'Content-Type': 'application/json',
-                    }
+                // 클릭 시 좋아요
+                favoriteOff.addEventListener("click", function () {
+                    fetch(`/api/favorite/${clothes.id}`, {
+                        method: 'POST',
+                        headers: {
+                            "Authorization": `${token}`,
+                            'Content-Type': 'application/json',
+                        }
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! status: ${response.status}`);
+                            } else {
+                                fetchPosts(currentPage, pageSize);
+                            }
+                        })
+                        .catch(error => console.error("Error fetching favorite:", error));
                 })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error(`HTTP error! status: ${response.status}`);
-                        } else {
-                            fetchPosts(currentPage, pageSize);
+
+                // 클릭 시 좋아요 삭제
+                favoriteOn.addEventListener("click", function () {
+                    fetch(`/api/favorite/${clothes.id}`, {
+                        method: 'DELETE',
+                        headers: {
+                            "Authorization": `${token}`,
+                            'Content-Type': 'application/json',
                         }
                     })
-                    .catch(error => console.error("Error fetching favorite:", error));
-            })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! status: ${response.status}`);
+                            } else {
+                                fetchPosts(currentPage, pageSize);
+                            }
+                        })
+                        .catch(error => console.error("Error fetching favorite:", error));
+                })
 
 
-            // 클릭 시 상세 페이지로 이동
-            const clickableElements = row.querySelectorAll(".thumbnail, .clothes-title, .clothes-content");
-            clickableElements.forEach( (e) => {
-                e.addEventListener("click", async () => {
-                    try {
-                        const response = await fetch(`/clothes/${clothes.id}`, {
-                            method: "GET",
-                            headers: {
-                                "Authorization": `${token}`,
-                            },
-                        });
+                // 클릭 시 상세 페이지로 이동
+                const clickableElements = row.querySelectorAll(".thumbnail, .clothes-title, .clothes-content");
+                clickableElements.forEach((e) => {
+                    e.addEventListener("click", async () => {
+                        try {
+                            const response = await fetch(`/clothes/${clothes.id}`, {
+                                method: "GET",
+                                headers: {
+                                    "Authorization": `${token}`,
+                                },
+                            });
 
-                        if (response.status === 200) {
-                            window.location.href = `/clothes/${clothes.id}`;
+                            if (response.status === 200) {
+                                window.location.href = `/clothes/${clothes.id}`;
 
-                        } else {
-                            alert("로그인이 필요합니다.");
-                            window.location.href = "/login";
+                            } else {
+                                alert("로그인이 필요합니다.");
+                                window.location.href = "/login";
+                            }
+                        } catch (error) {
+                            console.error("Error:", error);
+                            alert("요청 처리 중 문제가 발생했습니다.");
                         }
-                    } catch (error) {
-                        console.error("Error:", error);
-                        alert("요청 처리 중 문제가 발생했습니다.");
-                    }
-                });
-            })
+                    });
+                })
+            } else {
+                favoriteOff.addEventListener("click", function () {
+                    alert("로그인이 필요합니다.");
+                    window.location.href = "/login";
+                })
+
+                // 클릭 시 상세 페이지로 이동 막기
+                const clickableElements = row.querySelectorAll(".thumbnail, .clothes-title, .clothes-content");
+                clickableElements.forEach( (e) => {
+                    e.addEventListener("click", () => {
+                        alert("로그인이 필요합니다.");
+                        window.location.href = "/login";
+                    });
+                })
+            }
 
             clothesList.appendChild(row);
         });
