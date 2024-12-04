@@ -160,6 +160,7 @@ input:focus {
     border: #DADADA 1px solid;
     border-radius: 8px;
     flex-direction: column;
+    overflow: hidden;
     width: 265px;
     height: 290px;
 }
@@ -169,7 +170,12 @@ input:focus {
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     object-fit: cover;
+    transition: transform 0.7s ease;
 }
+.thumbnail:hover {
+    transform: scale(1.1); /* 이미지 확대 비율 */
+}
+
 .location {
     width: 9px;
     height: 10px;
@@ -219,4 +225,10 @@ nav {
     position: fixed;
     top: 0;
     left: 0;
+}
+
+.img-container {
+    width: 265px;
+    height: 191px;
+    overflow: hidden;
 }

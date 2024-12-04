@@ -17,6 +17,7 @@ body{
     border: #DADADA 1px solid;
     border-radius: 8px;
     flex-direction: column;
+    overflow: hidden;
     width: 265px;
     height: 290px;
 }
@@ -26,6 +27,10 @@ body{
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     object-fit: cover;
+    transition: transform 0.7s ease;
+}
+.thumbnail:hover {
+    transform: scale(1.1); /* 이미지 확대 비율 */
 }
 .location {
     width: 9px;
@@ -121,4 +126,11 @@ input:focus {
     border: none;
     background: none;
     cursor: pointer;
+}
+
+
+.img-container {
+    width: 265px;
+    height: 191px;
+    overflow: hidden;
 }

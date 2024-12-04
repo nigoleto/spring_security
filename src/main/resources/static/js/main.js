@@ -52,7 +52,9 @@ document.addEventListener("DOMContentLoaded", function () {
             const row = document.createElement("div");
             row.className = "clothes-item"
             row.innerHTML = `
-                        <img src="${thumbnailUrl}" alt="thumbnail" class="thumbnail">
+                        <div class="img-container">
+                            <img src="${thumbnailUrl}" alt="thumbnail" class="thumbnail">
+                        </div>
                         <div class="clothes-title-box">
                             <div>
                                 <span class="clothes-title">${truncatedTitle}</span>
