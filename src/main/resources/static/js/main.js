@@ -76,7 +76,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     method: 'GET',
                     headers: {
                         "Authorization": `${token}`,
-                        'Content-Type': 'application/json',
                     }
                 })
                     .then(response => response.json())

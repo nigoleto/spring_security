@@ -85,3 +85,16 @@ a {
 a:hover {
     text-decoration: underline;
 }
+
+.kakao-login {
+    padding: 0;
+    background: none;
+}
+
+.kakao-login img {
+    width: 300px;
+}
+
+.kakao-login:hover {
+    background: none;
+}

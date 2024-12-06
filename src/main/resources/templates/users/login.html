@@ -19,13 +19,6 @@
                     },
                     body: JSON.stringify({ email, password }),
                 });
-                //
-                // if (response.ok) {
-                //     const data = await response.json();
-                //     alert("Login successful: " + JSON.stringify(data));
-                // } else {
-                //     alert("Login failed");
-                // }
 
                 if (response.ok) {
                     const data = await response.json(); // JSON 형식으로 응답 처리
@@ -37,6 +30,10 @@
                     alert("Login failed");
                 }
             });
+
+            document.getElementById("kakao-login").addEventListener("click", () => {
+                window.location.href = "oauth2/authorization/kakao";
+            })
         });
     </script>
 </head>
@@ -58,5 +55,11 @@
     </div>
 </form>
 <a href="/signup"> 회원가입하기 </a>
+
+<hr>
+
+<div>
+    <button class="kakao-login" id="kakao-login"><img src="/img/kakao_login_large_wide.png"></button>
+</div>
 </body>
 </html>

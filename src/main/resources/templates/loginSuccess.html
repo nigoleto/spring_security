@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>로그인 성공</title>
+</head>
+<body>
+<h1>카카오 로그인 성공!</h1>
+<p>사용자 정보:</p>
+<pre th:text="${user}"></pre>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // URL에서 토큰 추출
+        const params = new URLSearchParams(window.location.search);
+        const token = params.get('token');
+
+        if (token) {
+            // 로컬 스토리지에 저장
+            localStorage.setItem('token', token);
+            window.location.href = "/";
+        } else {
+            console.error('JWT 토큰이 URL에 없습니다.');
+        }
+    })
+</script>
+</body>
+</html>
