@@ -241,6 +241,12 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     })
 
+    if (token) {
+        const payload = JSON.parse(atob(token.split(".")[1])); // Base64로 디코딩
+        if(payload.role === "ROLE_ADMIN") {
+            document.getElementById("pub-data-api").style.display = "block";
+        }
+    }
 
     document.getElementById("pub-data-api").addEventListener("submit", function (e) {
         e.preventDefault();
