@@ -15,7 +15,7 @@ public class JwtUtil {
     private static String secret = "D19BJbXsoP4NcRLTj9anT3jnHCSu4w83";
 
 //    @Value("${jwt.expiration_time}")
-    private static long expirationTime = 72000000;
+    private static long expirationTime = 1000 * 60 * 60 * 2;
 
     private static final Key key = Keys.hmacShaKeyFor(secret.getBytes());;
 

@@ -34,6 +34,9 @@
             document.getElementById("kakao-login").addEventListener("click", () => {
                 window.location.href = "oauth2/authorization/kakao";
             })
+            document.getElementById("google-login").addEventListener("click", () => {
+                window.location.href = "oauth2/authorization/google";
+            })
         });
     </script>
 </head>
@@ -58,8 +61,13 @@
 
 <hr>
 
-<div>
+<div class="api-login-container">
     <button class="kakao-login" id="kakao-login"><img src="/img/kakao_login_large_wide.png"></button>
+    <button class="google-login" id="google-login">
+        <img src="https://developers.google.com/static/identity/images/g-logo.png" style="width: 20px"><span style="
+    margin: 0 auto;
+">Google 계정으로 로그인</span>
+    </button>
 </div>
 </body>
 </html>

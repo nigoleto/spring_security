@@ -2,11 +2,13 @@ package io.security.springsecuritymaster.security;
 
 import io.security.springsecuritymaster.jwt.JwtAuthenticationFilter;
 import io.security.springsecuritymaster.jwt.JwtUtil;
+import jakarta.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,6 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -26,6 +29,7 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 @Configuration
@@ -42,11 +46,11 @@ public class SecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .authorizeHttpRequests(api -> api
                         .requestMatchers("/css/**", "/js/**", "/img/**", "/static/**").permitAll()
-                        .requestMatchers("/api/login", "/api/signup" ,"/api/clothes", "/api/gwangju").permitAll()
-                        .requestMatchers("/clothes/**","/loginSuccess" , "/loginFailure", "/oauth2/authorization/kakao", "/login/oauth2/code/kakao").permitAll()
+                        .requestMatchers("/api/login", "/api/signup" ,"/api/clothes", "/api/gwangju", "api/token").permitAll()
+                        .requestMatchers("/clothes/**","/loginSuccess" , "/loginFailure", "/oauth2/authorization/**", "/login/oauth2/code/**").permitAll()
                         .requestMatchers("/signup", "/login", "/logout" , "/", "/forgot-password", "verify-email").permitAll()
                         .requestMatchers("/api/gwangju/*").hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated()
@@ -71,14 +75,23 @@ public class SecurityConfig {
                                     // 사용자 정보 추출
                                     Map<String, Object> attributes = authToken.getPrincipal().getAttributes();
 
-                                    String email = (String) ((Map<String, Object>) attributes.get("kakao_account")).get("email"); // 이메일 필드 이름 확인 필요
-                                    String role = authToken.getAuthorities().stream()
-                                            .map(GrantedAuthority::getAuthority)
-                                            .findFirst()
-                                            .orElse("ROLE_USER"); // 기본 역할 설정
+//                                    String email = (String) ((Map<String, Object>) attributes.get("kakao_account")).get("email"); // 이메일 필드 이름 확인 필요
+//                                    String role = authToken.getAuthorities().stream()
+//                                            .map(GrantedAuthority::getAuthority)
+//                                            .findFirst()
+//                                            .orElse("ROLE_USER"); // 기본 역할 설정
+//
+//                                    String token = jwtUtil.generateToken(email, role);
 
-                                    String token = jwtUtil.generateToken(email, role);
-                                    response.sendRedirect("/loginSuccess?token=" + token);
+                                    // JWT를 HTTP 응답 헤더에 추가
+//                                    response.setHeader("Authorization", "Bearer " + token);
+
+                                    // 인증 객체 생성 및 SecurityContext에 설정
+//                                    UsernamePasswordAuthenticationToken auth =
+//                                            new UsernamePasswordAuthenticationToken(email, null, List.of(new SimpleGrantedAuthority(role)));
+//                                    SecurityContextHolder.getContext().setAuthentication(auth);
+
+                                    response.sendRedirect("/loginSuccess");
                                 })
                                 .failureHandler((request, response, exception) -> {
                                     // 로그로 에러 메시지 출력
@@ -112,14 +125,29 @@ public class SecurityConfig {
 
             // 카카오 사용자 정보 가져오기
             Map<String, Object> attributes = oAuth2User.getAttributes();
-            System.out.println("kakao : " + attributes);
+
+            String registrationId = userRequest.getClientRegistration().getRegistrationId();
 
             // DefaultOAuth2User 생성 및 반환
-            return new DefaultOAuth2User(
-                    Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")), // 권한
-                    attributes,
-                    "id" // 사용자 이름 속성으로 사용할 키
-            );
+            if(registrationId.equals("kakao")){
+                return new DefaultOAuth2User(
+                        Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")), // 권한
+                        attributes,
+                        "id" // 사용자 이름 속성으로 사용할 키
+                );
+            } else if(registrationId.equals("google")) {
+                return new DefaultOAuth2User(
+                        Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")), // 권한
+                        attributes,
+                        "email" // 사용자 이름 속성으로 사용할 키
+                );
+            } else {
+                return new DefaultOAuth2User(
+                        Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")), // 권한
+                        attributes,
+                        "id" // 사용자 이름 속성으로 사용할 키
+                );
+            }
         };
     }
 }

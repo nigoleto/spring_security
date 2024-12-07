@@ -186,7 +186,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const commentInput = document.getElementById("comment-input")
     document.getElementById("new-comment-box").addEventListener("submit", function(e) {
         e.preventDefault();
-        console.log("댓글 생성 버튼은 눌러짐");
         const commentContent = commentInput.value;
         fetch(`/api/comment/${clothesId}`, {
             method: 'POST',
@@ -200,7 +199,7 @@ document.addEventListener("DOMContentLoaded", function() {
         })
             .then(response => {
                 if (response.ok) {
-                    fetchComment();
+                    location.reload();
                 }
             })
             .catch(error => {

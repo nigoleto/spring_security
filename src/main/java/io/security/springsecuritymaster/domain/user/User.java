@@ -29,7 +29,10 @@ public class User extends BaseEntity implements UserDetails {
     @Column(nullable = false, length = 1000)
     private String password;
 
-    @Column(nullable = false, length = 12, unique = true)
+    @Column(nullable = false
+            , length = 12
+//            , unique = true
+    )
     private String nickname;
 
     @Enumerated(EnumType.STRING)

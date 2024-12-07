@@ -13,6 +13,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
@@ -87,6 +90,23 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
 
         user.verifiedUser();
+
+        userRepository.save(user);
+    }
+
+    @Transactional
+    public boolean isExistUserByEmail(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        return user.isPresent();
+    }
+
+    public void createApiUser(String email, String nickname) {
+        User user = User.builder()
+                .email(email)
+                .password(passwordEncoder.encode(UUID.randomUUID().toString()))
+                .nickname(nickname)
+                .isEmailVerified(true)
+                .build();
 
         userRepository.save(user);
     }
