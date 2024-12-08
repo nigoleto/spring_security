@@ -1,7 +1,4 @@
-
-/*#attach-delete { font-style: italic; font-size: 12px; color: #b30000}*/
-/*#attach-delete:hover { cursor: pointer; }*/
-/* 기본 글씨체 및 배경 */
+/* 글씨체 및 전체 배경 */
 body {
     font-family: Pretendard-Regular, sans-serif;
     margin: 0;
@@ -36,7 +33,7 @@ body {
     color: #666;
 }
 
-/* 수정 폼 */
+/* 작성 폼 */
 article.write {
     margin-top: 20px;
 }
@@ -74,27 +71,6 @@ form textarea {
     resize: vertical;
 }
 
-#attach-box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-    background-color: #f8f9fa;
-    padding: 10px;
-    border: 1px dashed #ddd;
-    border-radius: 5px;
-    text-align: center;
-    color: #777;
-}
-
-/* 첨부파일 정보가 없는 경우 */
-#attach-box:empty::before {
-    content: "첨부된 파일이 없습니다.";
-    font-size: 0.9rem;
-    color: #999;
-}
-
-/* 폼 버튼 및 링크 */
 form div:last-child {
     display: flex;
     justify-content: space-between;
@@ -116,7 +92,7 @@ form button {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background-color: #007bff;
+    background-color: #28a745;
     color: #fff;
     cursor: pointer;
     font-size: 1rem;
@@ -124,7 +100,29 @@ form button {
 }
 
 form button:hover {
-    background-color: #0056b3;
+    background-color: #218838;
+}
+
+/* 비로그인 메시지 */
+.error-401 {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #dc3545;
+    margin: 20px 0;
+}
+
+.error-401 + a {
+    display: block;
+    text-align: center;
+    font-size: 1rem;
+    color: #007bff;
+    text-decoration: none;
+    margin-top: 10px;
+    transition: color 0.3s;
+}
+
+.error-401 + a:hover {
+    color: #0056b3;
 }
 
 /* 반응형 디자인 */
