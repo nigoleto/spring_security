@@ -100,6 +100,7 @@ public class UserService implements UserDetailsService {
         return user.isPresent();
     }
 
+    @Transactional
     public void createApiUser(String email, String nickname) {
         User user = User.builder()
                 .email(email)

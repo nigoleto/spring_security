@@ -2,21 +2,17 @@ package io.security.springsecuritymaster.security;
 
 import io.security.springsecuritymaster.jwt.JwtAuthenticationFilter;
 import io.security.springsecuritymaster.jwt.JwtUtil;
-import jakarta.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -26,10 +22,8 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 @Configuration
@@ -49,9 +43,9 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .authorizeHttpRequests(api -> api
                         .requestMatchers("/css/**", "/js/**", "/img/**", "/static/**").permitAll()
-                        .requestMatchers("/api/login", "/api/signup" ,"/api/clothes", "/api/gwangju", "api/token").permitAll()
+                        .requestMatchers("/api/login", "/api/signup" ,"/api/clothes", "/api/gwangju", "/api/token", "/api/validate-email").permitAll()
                         .requestMatchers("/clothes/**","/loginSuccess" , "/loginFailure", "/oauth2/authorization/**", "/login/oauth2/code/**").permitAll()
-                        .requestMatchers("/signup", "/login", "/logout" , "/", "/forgot-password", "verify-email").permitAll()
+                        .requestMatchers("/signup", "/login", "/logout" , "/", "/forgot-password", "/verify-email").permitAll()
                         .requestMatchers("/api/gwangju/*").hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated()
                 )

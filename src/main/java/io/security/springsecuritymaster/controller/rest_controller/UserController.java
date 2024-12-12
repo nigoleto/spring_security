@@ -88,4 +88,10 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
+
+    @GetMapping("/validate-email")
+    public ResponseEntity<Boolean> validateEmail(@RequestParam String email) {
+        boolean isExistEmail = userService.isExistUserByEmail(email);
+        return  new ResponseEntity<>(isExistEmail, HttpStatusCode.valueOf(201));
+    }
 }
