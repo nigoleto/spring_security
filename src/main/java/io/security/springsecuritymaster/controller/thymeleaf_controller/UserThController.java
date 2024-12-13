@@ -33,7 +33,6 @@ public class UserThController {
     public String loginSuccess(Principal principal, Model model) {
         if (principal instanceof OAuth2AuthenticationToken authToken) {
             OAuth2User oAuth2User = authToken.getPrincipal();
-            System.out.println("OAuth2User: " + oAuth2User.getAttributes());
             model.addAttribute("user", oAuth2User.getAttributes());
         } else {
             throw new RuntimeException("Authentication object is not OAuth2AuthenticationToken.");

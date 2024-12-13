@@ -55,8 +55,6 @@ public class UserController {
             String email;
             String nickname;
 
-//            email = (String) ((Map<String, Object>) attributes.get("kakao_account")).get("email");
-//            nickname = (String) ((Map<String, Object>) attributes.get("properties")).get("nickname");
             if ("kakao".equals(registrationId)) {
                 email = (String) ((Map<String, Object>) attributes.get("kakao_account")).get("email");
                 nickname = (String) ((Map<String, Object>) attributes.get("properties")).get("nickname");

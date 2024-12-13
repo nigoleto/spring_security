@@ -66,6 +66,7 @@ button {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    font-family: Pretendard-Regular, sans-serif;
 }
 
 button:hover {

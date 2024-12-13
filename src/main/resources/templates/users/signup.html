@@ -120,23 +120,29 @@
                     confirmPasswordResultElement.textContent = '비밀번호가 일치합니다.';
                     confirmPasswordResultElement.classList.remove('error-message');
                     confirmPasswordResultElement.classList.add('success-message');
+                    passwordVerified = true;
                 }
             }
         })
 
+        // 로그인 제출
         async function submitLogin(event) {
             event.preventDefault(); // 기본 form 제출 방식을 막음
             const emailValue = document.getElementById("email").value;
             const password = document.getElementById("password").value;
             const nickname = document.getElementById("nickname").value;
 
-            if(emailVerified){
+            if(!emailVerified){
+                alert("올바른 이메일을 입력해주세요.")
+            } else if (!passwordVerified) {
+                alert("비밀번호를 확인해 주세요.")
+            } else {
                 const response = await fetch("/api/signup", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({ emailValue, password, nickname }),
+                    body: JSON.stringify({emailValue, password, nickname}),
                 });
 
                 if (response.ok) {
@@ -145,8 +151,6 @@
                 } else {
                     alert("signup failed");
                 }
-            } else {
-                alert("올바른 이메일을 입력해주세요.")
             }
         }
     </script>
@@ -157,12 +161,12 @@
 <h1>회원가입</h1>
 <form onsubmit="submitLogin(event)">
     <div>
-        <label for="email">Email:</label>
+        <label for="email">Email</label>
         <input type="email" id="email" name="email" placeholder="Enter your email" required>
         <span id="emailResult" class="validation-message"></span>
     </div>
     <div>
-        <label for="password">Password:</label>
+        <label for="password">Password</label>
         <input type="password" id="password" name="password" placeholder="Enter your password" required minlength="8">
         <span id="passwordResult" class="validation-message"></span>
     </div>
@@ -172,7 +176,7 @@
         <span id="confirmPasswordResult" class="validation-message"></span>
     </div>
     <div>
-        <label for="nickname">Nickname:</label>
+        <label for="nickname">Nickname</label>
         <input type="text" id="nickname" name="nickname" placeholder="Enter your nickname" required>
     </div>
     <div>
