@@ -16,6 +16,7 @@ nav {
     background-color: #ffffff;
     box-shadow: 1px 1px 3px #dfdfdf;
     color: #333333;
+    z-index: 10;
 }
 
 nav div {
