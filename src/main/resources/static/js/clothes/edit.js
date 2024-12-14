@@ -1,6 +1,8 @@
+let binId = "";
 document.addEventListener("DOMContentLoaded", function() {
     const clothesId = window.location.pathname.split("/")[2]; // URL에서 ID를 추출
     const token = localStorage.getItem("token"); // 로컬 스토리지의 토큰 가져오기
+
     console.log(clothesId);
     fetchClothesDetails(clothesId);
 
@@ -29,7 +31,10 @@ document.addEventListener("DOMContentLoaded", function() {
     function displayClothesDetails(clothes) {
         document.getElementById("newTitle").value = clothes.title;
         document.getElementById("newContent").value = clothes.description;
-
+        document.getElementById("gender").value = clothes.gender;
+        document.getElementById("size").value = clothes.size;
+        document.getElementById("status").value = clothes.status;
+        binId = clothes.gwangju.id;
 
         // 첨부파일
         if (clothes.attachList) {
@@ -39,11 +44,11 @@ document.addEventListener("DOMContentLoaded", function() {
             attachBox.innerHTML = fileList
                 .map(file => `
                         <div id="attach">
-                        <form> 
-                            <span>${file.fileName} </span>
-                            <a href="#" class="attach-delete" data-filename="${file.fileName}" data-clothesid="${clothes.id}">삭제</a>
-                        </form> 
                         <img src="${file.fileUrl}" alt="첨부 이미지">
+                        <div> 
+                            <span class="file-name">${file.fileName} </span>
+                            <a href="#" class="attach-delete" data-filename="${file.fileName}" data-clothesid="${clothes.id}">삭제</a>
+                        </div> 
                         </div>
                     `)
                 .join("");
@@ -117,17 +122,25 @@ document.getElementById('submitForm').addEventListener('click', async () => {
     const token = localStorage.getItem("token");
 
     // 주소 가져오기
-    const finalAddress = "editAddress"
+    const finalAddress = "editAddress";
+
+
 
     // Form에서 title과 content 값을 수집
     const title = document.getElementById('newTitle').value;
     const content = document.getElementById('newContent').value;
+    const gender = document.getElementById("gender").value;
+    const size = document.getElementById("size").value;
+    const status = document.getElementById("status").value;
 
     // ClothesRequestDto JSON 데이터 추가
     const clothesRequestDto = {
         title: title,
         description: content,
-        address: finalAddress
+        binId: binId,
+        gender: gender,
+        size: size,
+        status: status
     };
 
     // JSON 데이터는 문자열로 변환해서 FormData에 추가
@@ -149,7 +162,7 @@ document.getElementById('submitForm').addEventListener('click', async () => {
         });
 
         if (response.ok) {
-            window.location.href = "/";
+            window.location.href = `/clothes/${clothesId}`;
         } else {
             console.error("파일 업로드 실패");
         }

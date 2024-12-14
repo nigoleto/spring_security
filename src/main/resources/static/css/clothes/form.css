@@ -148,10 +148,6 @@ form button:hover {
     margin: 11px 0;
 }
 
-input#file-upload-button {
-    font-family: Pretendard-Regular, sans-serif;
-}
-
 #clothesForm div:last-child {
     display: flex;
     flex-flow: row;

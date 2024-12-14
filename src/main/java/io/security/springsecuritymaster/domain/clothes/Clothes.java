@@ -58,9 +58,12 @@ public class Clothes extends BaseEntity {
         this.viewCount++;
     }
 
-    public void update(String title, String description) {
+    public void update(String title, String description, Gender gender, String size, String status) {
         this.title = title;
         this.description = description;
+        this.gender = gender;
+        this.size = size;
+        this.status = status;
     }
 
     public void delete() {

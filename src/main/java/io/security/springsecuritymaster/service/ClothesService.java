@@ -118,7 +118,10 @@ public class ClothesService {
 
         clothes.update(
                 clothesRequestDto.title(),
-                clothesRequestDto.description()
+                clothesRequestDto.description(),
+                clothesRequestDto.gender(),
+                clothesRequestDto.size(),
+                clothesRequestDto.status()
         );
 
         if (attach != null && !attach.isEmpty()) {

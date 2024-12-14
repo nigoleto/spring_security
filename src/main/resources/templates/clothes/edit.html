@@ -8,7 +8,7 @@
 <body>
 <nav th:replace="~{layout/header::header}"></nav>
 <div id="layout">
-    <h2>수정폼</h2>
+    <h2>수정하기</h2>
     <p id="address"></p>
 
     <article class="write">
@@ -16,6 +16,43 @@
             <div>
                 <label for="newTitle" class="form-label">제목</label>
                 <input type="text" id="newTitle" name="title" class="form-control" required>
+            </div>
+            <div>
+                <label class="form-option">옵션</label>
+                <select name="gender" id="gender">
+                    <option value="select">-- 성별을 선택하세요 --</option>
+                    <option value="MALE">남자</option>
+                    <option value="FEMALE">여자</option>
+                    <option value="FREE">공용</option>
+                </select>
+                <select name="size" id="size">
+                    <option value="select">-- 사이즈를 선택하세요 --</option>
+                    <optgroup label="기본사이즈">
+                        <option value="XL">XL</option>
+                        <option value="L">L</option>
+                        <option value="M">M</option>
+                        <option value="S">S</option>
+                        <option value="XS">XS</option>
+                    </optgroup>
+                    <optgroup label="하의사이즈">
+                        <option value="25미만">25미만</option>
+                        <option value="25-26">25-26</option>
+                        <option value="27-28">27-28</option>
+                        <option value="29-30">29-30</option>
+                        <option value="31-32">31-32</option>
+                        <option value="33-34">33-34</option>
+                        <option value="35-36">35-36</option>
+                        <option value="37-38">37-38</option>
+                        <option value="39이상">39이상</option>
+                    </optgroup>
+                </select>
+                <select name="status" id="status">
+                    <option value="select">-- 의류 상태를 선택하세요 --</option>
+                    <option value="좋음">좋음</option>
+                    <option value="보통">보통</option>
+                    <option value="나쁨">나쁨</option>
+                </select>
+                <div></div>
             </div>
             <div>
                 <label for="newContent" class="form-label">내용</label>
