@@ -7,5 +7,5 @@ import org.hibernate.validator.constraints.Length;
 public record CreateUserRequestDto(
         @Email @NotBlank @Length(max = 20) String email,
         @NotBlank @Length(min = 2, max = 12) String nickname,
-        @NotBlank @Length(min = 2, max = 16)String password) {
+        @NotBlank @Length(min = 2, max = 16) String password) {
 }

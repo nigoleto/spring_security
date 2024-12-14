@@ -5,8 +5,11 @@ import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
 public record ClothesRequestDto (
-        @NotBlank @Length(max = 100) String title,
+        @NotBlank @Length(max = 30) String title,
         @NotBlank String description,
-        @NotBlank String address
+        @NotNull Long binId,
+        Gender gender,
+        String size,
+        String status
 ) {
 }

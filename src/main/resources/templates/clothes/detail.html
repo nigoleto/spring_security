@@ -6,21 +6,65 @@
     <link rel="stylesheet" href="/css/clothes/detail.css">
 </head>
 <body>
+<nav th:replace="~{layout/header::header}"></nav>
 <div id="layout">
 
     <div class="clothes">
-        <div class="input-container">
-            <h2 id="clothes-title">제목</h2>
-            <p id="clothes-date">작성일</p>
-        </div>
         <div id="attach-box" class="attach-box">
 
         </div>
-        <p id="clothes-content">내용</p>
-        <div class="buttons" id="buttons" style="display: none">
-            <button id="edit">수정</button>
-            <button id="delete">삭제</button>
+        <div class="input-container">
+            <div class="content-container">
+                <div class="subtitle-container">
+                    <p id="clothes-date">작성일</p>
+                    <div class="buttons" id="buttons" style="display: none">
+                        <button id="edit">수정</button>
+                        <button id="delete">삭제</button>
+                    </div>
+                </div>
+                <div class="title-container">
+                    <h2 id="clothes-title">제목</h2>
+                    <div>
+                        <img id="favorite-on" src="/img/Star_on.png" style="display: none" alt="add-favorite">
+                        <img id="favorite-off" src="/img/Star_off.png" style="display: block" alt="add-favorite">
+                    </div>
+                </div>
+                <div class="address-container">
+                    <span id="address-si" class="address-box">광주광역시</span>
+                    <span id="address-gu" class="address-box">서구</span>
+                    <span id="address-dong" class="address-box">계림동</span>
+                </div>
+
+                <div class="user-container">
+                    <p id="user-nickname">데구리</p>
+                </div>
+                <div class="userinfo-container">
+                    <div>
+                        <p class="info-location">위치</p>
+                        <p id="info-location-value">광주시 가리내길 21</p>
+                    </div>
+                    <div>
+                        <p class="info-gender">성별</p>
+                        <p id="info-gender-value">-</p>
+                    </div>
+                    <div>
+                        <p class="info-topSize">사이즈</p>
+                        <p id="info-topSize-value">-</p>
+                    </div>
+                    <div>
+                        <p class="info-status">상태</p>
+                        <p id="info-status-value">-</p>
+                    </div>
+                </div>
+                <div style="border-top: 1px solid #e9e9e9; margin-top:30px;"></div>
+                <p id="clothes-content">내용</p>
+            </div>
+            <div class="button-container">
+                <button id="btn-onMyWay"><span>4명</span> 지금 가지러 가고 있어요! </button>
+                <button id="btn-gotIt"> 제가 가져갔어요! </button>
+            </div>
         </div>
+
     </div>
 
     <div class="comment">

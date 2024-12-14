@@ -9,8 +9,8 @@
     <nav th:replace="~{layout/header::header}"></nav>
 
     <header>
-        <h1>내 주변에 있는</h1>
-        <h1>의류수거함을 찾아보세요</h1>
+        <h1>의류수거함을 찾고</h1>
+        <h1>내 의류를 공유해 보세요</h1>
     </header>
 
     <main>
@@ -127,7 +127,7 @@
                                             <div class="infowindow-address">
                                                 ${address}
                                             </div>
-                                            <a href="/clothes/form?address=${address}" class="infowindow-button"
+                                            <a href="/clothes/form?address=${address}&id=${bin.id}" class="infowindow-button"
                                               onmouseover="this.style.backgroundColor='#BDA89C';"
                                               onmouseout="this.style.backgroundColor='#D6C8BF';">
                                                 여기에 내 의류 등록하기

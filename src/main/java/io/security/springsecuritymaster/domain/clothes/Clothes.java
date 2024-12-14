@@ -42,6 +42,16 @@ public class Clothes extends BaseEntity {
     @Column(nullable = false, length = 5000)
     private String description;
 
+    @Enumerated(EnumType.STRING)
+    @Column
+    private Gender gender;
+
+    @Column
+    private String size;
+
+    @Column
+    private String status;
+
     private int viewCount = 0;
 
     public void increaseViewCount() {

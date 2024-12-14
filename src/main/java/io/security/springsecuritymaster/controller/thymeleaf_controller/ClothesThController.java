@@ -21,8 +21,13 @@ public class ClothesThController {
     public String getClothesEdit() { return "clothes/edit"; }
 
     @GetMapping("/form")
-    public String getClothesForm(@RequestParam(required = false) String address, Model model) {
+    public String getClothesForm(
+            @RequestParam(required = false) String address,
+            @RequestParam(required = false) Long id,
+            Model model
+    ) {
         model.addAttribute("address", address);
+        model.addAttribute("id", id);
         return "clothes/form";
     }
 }

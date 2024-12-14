@@ -9,18 +9,28 @@ document.getElementById('submitForm').addEventListener('click', async (e) => {
     const roadAddress = fullAddress.replace(/.*?\s.*?\s/, "");
     const finalAddress = roadAddress.replace(/로(?=\d)/g, '로 ');
 
+    // bin 엔티티 id 가져오기
+    const binId = document.getElementById("bin-id").textContent;
+    console.log("id: " + binId);
+
     // 토큰 가져오기
     const token = localStorage.getItem("token");
 
     // Form에서 title과 content 값을 수집
     const title = document.getElementById('newTitle').value;
     const content = document.getElementById('newContent').value;
+    const gender = document.getElementById("gender").value;
+    const size = document.getElementById("size").value;
+    const status = document.getElementById("status").value;
 
     // ClothesRequestDto JSON 데이터 추가
     const clothesRequestDto = {
         title: title,
         description: content,
-        address: finalAddress
+        binId: binId,
+        gender: gender,
+        size: size,
+        status: status
     };
 
     // JSON 데이터는 문자열로 변환해서 FormData에 추가

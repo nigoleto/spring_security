@@ -1,6 +1,9 @@
 document.addEventListener("DOMContentLoaded", function() {
     const clothesId = window.location.pathname.split("/").pop(); // URL에서 ID를 추출
     const token = localStorage.getItem("token"); // 로컬 스토리지의 토큰 가져오기
+    const favoriteOn = document.getElementById("favorite-on");
+    const favoriteOff = document.getElementById("favorite-off");
+
     fetchClothesDetails(clothesId);
     fetchComment();
 
@@ -20,6 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {
             })
             .then(data => {
                 displayClothesDetails(data);
+                fetchFavorite();
             })
             .catch(error => {
                 console.error('Error fetching clothes details:', error);
@@ -28,8 +32,19 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function displayClothesDetails(clothes) {
+
         document.getElementById("clothes-title").textContent = clothes.title;
         document.getElementById("clothes-content").innerHTML = clothes.description.replace(/\n/g, "<br>");
+        document.getElementById("user-nickname").textContent = clothes.user.nickname;
+        document.getElementById("address-gu").textContent = clothes.gwangju.gu;
+        document.getElementById("address-dong").textContent = clothes.gwangju.dong;
+        document.getElementById("info-location-value").textContent = clothes.gwangju.address;
+        document.getElementById("info-status-value").textContent = clothes.status;
+        document.getElementById("info-topSize-value").textContent = clothes.size;
+
+        document.getElementById("info-gender-value").textContent =
+            clothes.gender === "MALE" ? "남" : clothes.gender === "FEMALE" ? "여" : clothes.gender === "FREE" ? "공용" : "-";
+
 
         // 작성일을 원하는 형식으로 변환
         const date = new Date(clothes.createdAt);
@@ -77,8 +92,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // 게시글 수정
-    const edit = document.getElementById("edit");
-    edit.addEventListener("click", function() {
+    document.getElementById("edit").addEventListener("click", function() {
         window.location.href = `/clothes/${clothesId}/edit`;
     });
     // 게시글 삭제
@@ -128,6 +142,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 alert('Error fetching clothes details:' + error);
             });
     }
+
     function displayComments(comments) {
         const commentBox = document.getElementById("comment-list")
 
@@ -207,4 +222,65 @@ document.addEventListener("DOMContentLoaded", function() {
             });
     })
 
+    // 내 좋아요 게시글 조회
+    function fetchFavorite() {
+        fetch(`/api/favorite`, {
+            method: 'GET',
+            headers: {
+                "Authorization": `${token}`,
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                for (let i = 0; i < data.length; i++) {
+                    if (data[i] == clothesId) {
+                        document.getElementById("favorite-on").style.display = "block";
+                        document.getElementById("favorite-off").style.display = "none";
+                        break;
+                    }
+                }
+            })
+            .catch(error => console.error("Error fetching favorite:", error));
+    }
+
+    // 클릭 시 좋아요
+    favoriteOff.addEventListener("click", function () {
+        fetch(`/api/favorite/${clothesId}`, {
+            method: 'POST',
+            headers: {
+                "Authorization": `${token}`,
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                } else {
+                    document.getElementById("favorite-on").style.display = "block";
+                    document.getElementById("favorite-off").style.display = "none";
+                }
+            })
+            .catch(error => console.error("Error fetching favorite:", error));
+    })
+
+    // 클릭 시 좋아요 삭제
+    favoriteOn.addEventListener("click", function () {
+        fetch(`/api/favorite/${clothesId}`, {
+            method: 'DELETE',
+            headers: {
+                "Authorization": `${token}`,
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                } else {
+                    document.getElementById("favorite-on").style.display = "none";
+                    document.getElementById("favorite-off").style.display = "block";
+                }
+            })
+            .catch(error => console.error("Error fetching favorite:", error));
+    })
 });

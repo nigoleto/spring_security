@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.swing.text.html.Option;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -50,15 +51,17 @@ public class ClothesService {
                 .orElseThrow(() -> new RuntimeException("User Not Found"));
 
         // 주소명으로 gwangju 인스턴스 검색
-        Optional<Gwangju> OpGwangju = gwangjuRepository.findByAddress(clothesRequestDto.address());
+        Optional<Gwangju> OpGwangju = gwangjuRepository.findById(clothesRequestDto.binId());
         Gwangju gwangju = OpGwangju.orElseGet(Gwangju::new);
-
 
         Clothes clothes = Clothes.builder()
                 .user(user)
                 .gwangju(gwangju)
                 .title(clothesRequestDto.title())
                 .description(clothesRequestDto.description())
+                .gender(clothesRequestDto.gender())
+                .size(clothesRequestDto.size())
+                .status(clothesRequestDto.status())
                 .build();
 
 

@@ -21,6 +21,9 @@ public class ClothesResponseDto {
     private Gwangju gwangju;
     private String title;
     private String description;
+    private Gender gender;
+    private String size;
+    private String status;
     private LocalDateTime createdAt;
     private int viewCount;
 
@@ -38,6 +41,9 @@ public class ClothesResponseDto {
                 .gwangju(clothes.getGwangju())
                 .title(clothes.getTitle())
                 .description(clothes.getDescription())
+                .gender(clothes.getGender())
+                .size(clothes.getSize())
+                .status(clothes.getStatus())
                 .createdAt(clothes.getCreatedAt())
                 .viewCount(clothes.getViewCount())
                 .build();
