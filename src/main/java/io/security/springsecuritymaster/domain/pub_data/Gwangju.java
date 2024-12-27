@@ -1,7 +1,10 @@
 package io.security.springsecuritymaster.domain.pub_data;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Table
 @Entity

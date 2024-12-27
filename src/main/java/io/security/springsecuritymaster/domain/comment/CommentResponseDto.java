@@ -1,6 +1,5 @@
 package io.security.springsecuritymaster.domain.comment;
 
-import io.security.springsecuritymaster.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 

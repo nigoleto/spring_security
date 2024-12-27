@@ -1,6 +1,5 @@
 package io.security.springsecuritymaster.controller.rest_controller;
 
-import io.security.springsecuritymaster.domain.favorite.FavoriteResponseDto;
 import io.security.springsecuritymaster.service.FavoriteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatusCode;
