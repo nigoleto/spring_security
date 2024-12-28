@@ -3,6 +3,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const token = localStorage.getItem("token"); // 로컬 스토리지의 토큰 가져오기
     const favoriteOn = document.getElementById("favorite-on");
     const favoriteOff = document.getElementById("favorite-off");
+    const onMyWayBtn = document.getElementById("btn-onMyWay");
+    const countOnMyWay = document.getElementById("count-onMyWay");
 
     fetchClothesDetails(clothesId);
     fetchComment();
@@ -23,6 +25,7 @@ document.addEventListener("DOMContentLoaded", function() {
             })
             .then(data => {
                 displayClothesDetails(data);
+                displayOnMyWay();
                 fetchFavorite();
             })
             .catch(error => {
@@ -283,4 +286,45 @@ document.addEventListener("DOMContentLoaded", function() {
             })
             .catch(error => console.error("Error fetching favorite:", error));
     })
+
+    // 지금 가지러 가고 있는 사람 수 출력
+    function displayOnMyWay() {
+        fetch(`/api/onmyway/${clothesId}`, {
+            method: 'GET',
+            headers: {
+                "Authorization": `${token}`,
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                countOnMyWay.textContent = `${data}명`;
+            })
+            .catch(error => console.error("Error fetching onmyway:", error));
+    }
+
+    // 클릭시 지금 가지러가고있어요
+    onMyWayBtn.addEventListener("click", function() {
+        fetch(`/api/onmyway/${clothesId}`, {
+            method: 'POST',
+            headers: {
+                "Authorization": `${token}`,
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                } else {
+                    displayOnMyWay();
+                }
+            })
+            .catch(error => console.error("Error fetching onmyway:", error));
+    })
+
 });
